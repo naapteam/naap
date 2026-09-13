@@ -254,5 +254,26 @@
       "confirmed": "कन्फर्म झाले — रिकव्हरी {recovery}%.",
       "backToStock": "लॉट पहा"
     }
+  },
+  "despatch": {
+    "title": "Despatch",
+    "customer": "ग्राहक",
+    "vehicleNo": "वाहन नंबर",
+    "challanNo": "चलान नंबर",
+    "tpNumber": "TP नंबर",
+    "date": "तारीख",
+    "species": "प्रजाती",
+    "form": "फॉर्म",
+    "size": "साइज़",
+    "bay": "बे",
+    "cft": "CFT",
+    "empty": "Despatch साठी कोणताही स्टॉक उपलब्ध नाही.",
+    "selected": "निवडलेले",
+    "totalCft": "एकूण",
+    "record": "Despatch नोंदवा",
+    "recording": "नोंदवत आहे…",
+    "recorded": "Despatch नोंदवले.",
+    "printChallan": "चलान प्रिंट करा",
+    "backToList": "Despatch कडे परत जा"
   }
 }

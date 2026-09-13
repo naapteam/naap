@@ -254,5 +254,26 @@
       "confirmed": "કન્ફર્મ થયું — રિકવરી {recovery}%.",
       "backToStock": "લોટ જુઓ"
     }
+  },
+  "despatch": {
+    "title": "Despatch",
+    "customer": "ગ્રાહક",
+    "vehicleNo": "વાહન નંબર",
+    "challanNo": "ચલણ નંબર",
+    "tpNumber": "TP નંબર",
+    "date": "તારીખ",
+    "species": "જાત",
+    "form": "ફોર્મ",
+    "size": "સાઈઝ",
+    "bay": "બે",
+    "cft": "CFT",
+    "empty": "Despatch માટે કોઈ સ્ટોક ઉપલબ્ધ નથી.",
+    "selected": "પસંદ કરેલ",
+    "totalCft": "કુલ",
+    "record": "Despatch નોંધો",
+    "recording": "નોંધાઈ રહ્યું છે…",
+    "recorded": "Despatch નોંધાયું.",
+    "printChallan": "ચલણ પ્રિન્ટ કરો",
+    "backToList": "Despatch પર પાછા જાઓ"
   }
 }

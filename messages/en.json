@@ -254,5 +254,26 @@
       "confirmed": "Confirmed — recovery {recovery}%.",
       "backToStock": "View lot"
     }
+  },
+  "despatch": {
+    "title": "Despatch",
+    "customer": "Customer",
+    "vehicleNo": "Vehicle number",
+    "challanNo": "Challan number",
+    "tpNumber": "TP number",
+    "date": "Date",
+    "species": "Species",
+    "form": "Form",
+    "size": "Size",
+    "bay": "Bay",
+    "cft": "CFT",
+    "empty": "No free stock to despatch.",
+    "selected": "Selected",
+    "totalCft": "Total",
+    "record": "Record despatch",
+    "recording": "Recording…",
+    "recorded": "Despatch recorded.",
+    "printChallan": "Print challan",
+    "backToList": "Back to Despatch"
   }
 }
