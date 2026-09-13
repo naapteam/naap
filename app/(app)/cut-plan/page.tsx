@@ -1,13 +1,29 @@
+import Link from "next/link";
 import { and, desc, eq, inArray, sql } from "drizzle-orm";
+import { getTranslations } from "next-intl/server";
 import { getSession } from "@/lib/auth/session";
 import { db } from "@/lib/db/client";
-import { intake, lot, piece, sizePreset, species } from "@/lib/db/schema";
+import { conversion, intake, lot, piece, sizePreset, species } from "@/lib/db/schema";
 import { CutPlanWizard } from "@/components/cutplan/CutPlanWizard";
+import { formatCft } from "@/lib/i18n/format";
 
 export default async function CutPlanPage() {
   const session = await getSession();
+  const t = await getTranslations("cutPlan");
   if (!session?.millId) return null;
   const millId = session.millId;
+
+  const pending = await db
+    .select({
+      id: conversion.id,
+      lotCode: lot.code,
+      predictedOutputLow: conversion.predictedOutputLow,
+      predictedOutputHigh: conversion.predictedOutputHigh,
+    })
+    .from(conversion)
+    .leftJoin(lot, eq(lot.id, conversion.lotId))
+    .where(and(eq(conversion.millId, millId), eq(conversion.status, "planned")))
+    .orderBy(desc(conversion.occurredAt));
 
   const lotsRaw = await db
     .select({
@@ -67,5 +83,29 @@ export default async function CutPlanPage() {
     .orderBy(desc(sizePreset.useCount))
     .limit(10);
 
-  return <CutPlanWizard lots={lots} sizePresets={sizePresets} />;
+  return (
+    <div className="flex flex-col gap-4">
+      {pending.length > 0 && (
+        <div className="rounded-md border-[1.5px] border-[#C9CFD4] bg-white p-4">
+          <h2 className="mb-2 text-sm font-semibold text-[#4A5057]">
+            {t("pendingConfirmations")}
+          </h2>
+          <ul className="flex flex-col gap-1">
+            {pending.map((p) => (
+              <li key={p.id} className="flex items-center justify-between">
+                <span className="text-[17px] text-[#14171A]">
+                  {p.lotCode} · {formatCft(Number(p.predictedOutputLow))} –{" "}
+                  {formatCft(Number(p.predictedOutputHigh))} CFT
+                </span>
+                <Link href={`/cut-plan/${p.id}/confirm`} className="text-sm text-[#1B6BB8]">
+                  {t("confirmLink")}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <CutPlanWizard lots={lots} sizePresets={sizePresets} />
+    </div>
+  );
 }

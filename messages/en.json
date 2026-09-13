@@ -222,6 +222,35 @@
     "saving": "Saving…",
     "saved": "Cut plan saved.",
     "printSheet": "Print cut sheet",
-    "backToList": "Back to Cut plan"
+    "backToList": "Back to Cut plan",
+    "pendingConfirmations": "Pending confirmations",
+    "confirmLink": "Confirm",
+    "confirm": {
+      "predicted": "Predicted",
+      "size": "Size",
+      "predictedCol": "Predicted",
+      "actualCol": "Actual",
+      "offcuts": "Offcuts",
+      "byproduct": "Byproduct",
+      "actualOutput": "Actual output",
+      "recovery": "Recovery",
+      "belowRangeBy": "Below range by",
+      "aboveRangeBy": "Above range by",
+      "whyLower": "Why was it different?",
+      "reason": {
+        "hollow": "Hollow",
+        "borer": "Borer",
+        "rot": "Rot",
+        "sweep": "Sweep",
+        "wrong_size": "Wrong size cut",
+        "operator": "Operator",
+        "unexplained": "Don't know"
+      },
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "confirming": "Confirming…",
+      "confirmed": "Confirmed — recovery {recovery}%.",
+      "backToStock": "View lot"
+    }
   }
 }

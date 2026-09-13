@@ -222,6 +222,35 @@
     "saving": "સેવ થઈ રહ્યું છે…",
     "saved": "Cut plan સેવ થઈ.",
     "printSheet": "Cut sheet પ્રિન્ટ કરો",
-    "backToList": "Cut plan પર પાછા જાઓ"
+    "backToList": "Cut plan પર પાછા જાઓ",
+    "pendingConfirmations": "કન્ફર્મેશન બાકી",
+    "confirmLink": "કન્ફર્મ કરો",
+    "confirm": {
+      "predicted": "અંદાજિત",
+      "size": "સાઈઝ",
+      "predictedCol": "અંદાજિત",
+      "actualCol": "વાસ્તવિક",
+      "offcuts": "Offcut",
+      "byproduct": "Byproduct",
+      "actualOutput": "વાસ્તવિક આઉટપુટ",
+      "recovery": "રિકવરી",
+      "belowRangeBy": "રેન્જ કરતાં ઓછું",
+      "aboveRangeBy": "રેન્જ કરતાં વધારે",
+      "whyLower": "ફરક કેમ આવ્યો?",
+      "reason": {
+        "hollow": "પોકળ",
+        "borer": "બોરર",
+        "rot": "સડેલું",
+        "sweep": "સ્વીપ",
+        "wrong_size": "ખોટી સાઈઝ કપાઈ",
+        "operator": "ઓપરેટર",
+        "unexplained": "ખબર નથી"
+      },
+      "cancel": "રદ કરો",
+      "confirm": "કન્ફર્મ કરો",
+      "confirming": "કન્ફર્મ થઈ રહ્યું છે…",
+      "confirmed": "કન્ફર્મ થયું — રિકવરી {recovery}%.",
+      "backToStock": "લોટ જુઓ"
+    }
   }
 }

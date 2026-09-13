@@ -5,6 +5,7 @@ import { conversion, conversionInput, conversionTarget, lot, piece } from "@/lib
 import { AuthError, requireCan } from "@/lib/auth/guard";
 import { writeAudit } from "@/lib/auth/audit";
 import { saveCutPlanPayloadSchema } from "@/lib/cutplan/schema";
+import { allocateTargetQuantities } from "@/lib/cutplan/targetAllocation";
 
 export async function POST(req: Request) {
   let session;
@@ -83,14 +84,19 @@ export async function POST(req: Request) {
       })
       .returning();
 
+    const predictedQuantities = allocateTargetQuantities(
+      body.targets,
+      (body.predicted.outputLow + body.predicted.outputHigh) / 2,
+    );
+
     await tx.insert(conversionTarget).values(
-      body.targets.map((t) => ({
+      body.targets.map((t, i) => ({
         conversionId: conversionRow.id,
         thicknessMm: t.thicknessMm,
         widthMm: t.widthMm,
         lengthMm: t.lengthMm,
         targetQuantity: t.targetQuantity?.toString(),
-        predictedQuantity: t.predictedQuantity?.toString(),
+        predictedQuantity: predictedQuantities[i].toString(),
       })),
     );
 
