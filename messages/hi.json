@@ -46,9 +46,26 @@
     "signingIn": "साइन इन हो रहा है…",
     "useOtpInstead": "इसके बजाय OTP का उपयोग करें"
   },
-  "home": {
-    "buildInProgress": "Naap — निर्माणाधीन।",
-    "signedInAs": "{name} ({role}) के रूप में साइन इन है"
+  "dashboard": {
+    "title": "डैशबोर्ड",
+    "intake": "Intake",
+    "output": "आउटपुट",
+    "recovery": "रिकवरी",
+    "deadStock": "डेड स्टॉक",
+    "today": "आज",
+    "thisMonth": "इस महीने",
+    "over60Days": "60 दिन से ज़्यादा",
+    "unexplainedBanner": "इस महीने {cft} CFT अस्पष्ट है।",
+    "lookIntoIt": "देखें",
+    "pendingConfirmations": "पेंडिंग कन्फर्मेशन",
+    "cutsAwaiting": "{count} कट अप्रूवल का इंतज़ार कर रहे हैं",
+    "open": "खोलें",
+    "predictionAccuracy": "अनुमान की सटीकता",
+    "last30Cuts": "पिछले 30 कट: {inside} रेंज में, {outside} रेंज से बाहर",
+    "noCutsYet": "अभी तक कोई कन्फर्म कट नहीं।",
+    "autoAcceptTitle": "प्रति यूज़र ऑटो-एक्सेप्ट रेट",
+    "autoAcceptHint": "बिना किसी बदलाव के स्वीकार किए गए कन्फर्मेशन का हिस्सा।",
+    "noConfirmations": "अभी तक कोई कन्फर्मेशन नहीं।"
   },
   "intake": {
     "title": "Intake",
@@ -336,8 +353,11 @@
       "parties": "पार्टियां — जल्द आएगा।",
       "users": "यूज़र — जल्द आएगा।",
       "thresholds": "थ्रेशोल्ड — जल्द आएगा।",
-      "millProfile": "मिल प्रोफ़ाइल — जल्द आएगा।",
-      "dataExport": "डेटा निर्यात — जल्द आएगा।"
+      "millProfile": "मिल प्रोफ़ाइल — जल्द आएगा।"
+    },
+    "dataExport": {
+      "explain": "इस मिल का हर Intake, लॉट, स्टॉक पीस, कट, Despatch और मास्टर लिस्ट — एक ही Excel फ़ाइल में, कुछ भी नहीं रोका गया।",
+      "button": "सब कुछ Excel में निर्यात करें"
     },
     "species": {
       "title": "प्रजाति",

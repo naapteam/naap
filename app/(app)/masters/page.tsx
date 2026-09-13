@@ -58,9 +58,24 @@ export default async function MastersPage({
         {tab === "species" && <SpeciesTabLoader millId={session.millId!} />}
         {tab === "compliance" && <ComplianceTabLoader millId={session.millId!} />}
         {tab === "rateLock" && <RateLockTab />}
-        {tab !== "species" && tab !== "compliance" && tab !== "rateLock" && (
-          <p className="text-[#4A5057]">{t(`placeholder.${tab}`)}</p>
+        {tab === "dataExport" && (
+          <div className="flex flex-col gap-3">
+            <h2 className="text-[17px] font-semibold text-[#14171A]">{t("tabs.dataExport")}</h2>
+            <p className="max-w-md text-[#4A5057]">{t("dataExport.explain")}</p>
+            <a
+              href="/api/masters/export"
+              className="h-10 w-fit rounded-md bg-[#1B6BB8] px-4 font-semibold leading-10 text-white"
+            >
+              {t("dataExport.button")}
+            </a>
+          </div>
         )}
+        {tab !== "species" &&
+          tab !== "compliance" &&
+          tab !== "rateLock" &&
+          tab !== "dataExport" && (
+            <p className="text-[#4A5057]">{t(`placeholder.${tab}`)}</p>
+          )}
       </div>
     </div>
   );

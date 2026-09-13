@@ -46,9 +46,26 @@
     "signingIn": "Signing in…",
     "useOtpInstead": "Use OTP instead"
   },
-  "home": {
-    "buildInProgress": "Naap — build in progress.",
-    "signedInAs": "Signed in as {name} ({role})"
+  "dashboard": {
+    "title": "Dashboard",
+    "intake": "Intake",
+    "output": "Output",
+    "recovery": "Recovery",
+    "deadStock": "Dead stock",
+    "today": "today",
+    "thisMonth": "this month",
+    "over60Days": "over 60 days",
+    "unexplainedBanner": "Unexplained {cft} CFT this month.",
+    "lookIntoIt": "Look into it",
+    "pendingConfirmations": "Pending confirmations",
+    "cutsAwaiting": "{count} cuts awaiting approval",
+    "open": "Open",
+    "predictionAccuracy": "Prediction accuracy",
+    "last30Cuts": "Last 30 cuts: {inside} inside range, {outside} outside",
+    "noCutsYet": "No confirmed cuts yet.",
+    "autoAcceptTitle": "Auto-accept rate per user",
+    "autoAcceptHint": "Share of confirmations accepted with zero edits.",
+    "noConfirmations": "No confirmations yet."
   },
   "intake": {
     "title": "Intake",
@@ -336,8 +353,11 @@
       "parties": "Parties — coming soon.",
       "users": "Users — coming soon.",
       "thresholds": "Thresholds — coming soon.",
-      "millProfile": "Mill profile — coming soon.",
-      "dataExport": "Data export — coming soon."
+      "millProfile": "Mill profile — coming soon."
+    },
+    "dataExport": {
+      "explain": "Every intake, lot, stock piece, cut, despatch and master list for this mill, in one Excel file — nothing held back.",
+      "button": "Export everything to Excel"
     },
     "species": {
       "title": "Species",
