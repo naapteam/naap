@@ -1,0 +1,48 @@
+{
+  "common": {
+    "appName": "Naap",
+    "nav": {
+      "dashboard": "ડેશબોર્ડ",
+      "intake": "Intake",
+      "cutPlan": "Cut plan",
+      "stock": "સ્ટોક",
+      "despatch": "Despatch",
+      "reports": "રિપોર્ટ",
+      "masters": "માસ્ટર્સ"
+    },
+    "actions": {
+      "save": "સેવ કરો",
+      "cancel": "રદ કરો",
+      "signOut": "સાઇન આઉટ",
+      "clearFilters": "ફિલ્ટર દૂર કરો",
+      "confirm": "કન્ફર્મ કરો"
+    },
+    "language": "ભાષા",
+    "sync": {
+      "saved": "સેવ થયું",
+      "sending": "મોકલાઈ રહ્યું છે",
+      "offline": "ઓફલાઇન — {count} બાકી"
+    }
+  },
+  "auth": {
+    "title": "Naap માં સાઇન ઇન કરો",
+    "phoneLabel": "ફોન નંબર",
+    "phonePlaceholder": "10 અંકનો નંબર",
+    "sendOtp": "OTP મોકલો",
+    "sending": "મોકલાઈ રહ્યું છે…",
+    "otpSentTo": "{phone} પર મોકલેલો OTP દાખલ કરો.",
+    "otpLabel": "OTP",
+    "otpPlaceholder": "6 અંકનો કોડ",
+    "verifyAndSignIn": "ચકાસો અને સાઇન ઇન કરો",
+    "verifying": "ચકાસાઈ રહ્યું છે…",
+    "pinLabel": "પિન",
+    "pinPlaceholder": "4 અંકનો પિન",
+    "signIn": "સાઇન ઇન કરો",
+    "signingIn": "સાઇન ઇન થઈ રહ્યું છે…",
+    "useOtpInstead": "તેના બદલે OTP વાપરો"
+  },
+  "home": {
+    "buildInProgress": "Naap — બિલ્ડ ચાલુ છે.",
+    "signedInAs": "{name} ({role}) તરીકે સાઇન ઇન છે"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "common": {
+    "appName": "Naap",
+    "nav": {
+      "dashboard": "Dashboard",
+      "intake": "Intake",
+      "cutPlan": "Cut plan",
+      "stock": "Stock",
+      "despatch": "Despatch",
+      "reports": "Reports",
+      "masters": "Masters"
+    },
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "signOut": "Sign out",
+      "clearFilters": "Clear filters",
+      "confirm": "Confirm"
+    },
+    "language": "Language",
+    "sync": {
+      "saved": "Saved",
+      "sending": "Sending",
+      "offline": "Offline — {count} waiting"
+    }
+  },
+  "auth": {
+    "title": "Sign in to Naap",
+    "phoneLabel": "Phone number",
+    "phonePlaceholder": "10-digit number",
+    "sendOtp": "Send OTP",
+    "sending": "Sending…",
+    "otpSentTo": "Enter the OTP sent to {phone}.",
+    "otpLabel": "OTP",
+    "otpPlaceholder": "6-digit code",
+    "verifyAndSignIn": "Verify & sign in",
+    "verifying": "Verifying…",
+    "pinLabel": "PIN",
+    "pinPlaceholder": "4-digit PIN",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "useOtpInstead": "Use OTP instead"
+  },
+  "home": {
+    "buildInProgress": "Naap — build in progress.",
+    "signedInAs": "Signed in as {name} ({role})"
+  }
+}

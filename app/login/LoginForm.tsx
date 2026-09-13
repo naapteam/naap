@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useTranslations } from "next-intl";
 import { loginAction, type LoginState } from "./actions";
 
 export function LoginForm({
@@ -10,6 +11,7 @@ export function LoginForm({
   initialPhone: string | null;
   next: string;
 }) {
+  const t = useTranslations("auth");
   const initialState: LoginState = initialPhone
     ? { step: "pin", phone: initialPhone }
     : { step: "phone", phone: "" };
@@ -28,20 +30,18 @@ export function LoginForm({
         <input type="hidden" name="phone" value={state.phone} />
       )}
 
-      <h1 className="text-[17px] font-semibold text-[#14171A]">
-        Sign in to Naap
-      </h1>
+      <h1 className="text-[17px] font-semibold text-[#14171A]">{t("title")}</h1>
 
       {state.step === "phone" && (
         <>
           <label className="flex flex-col gap-1 text-sm text-[#4A5057]">
-            Phone number
+            {t("phoneLabel")}
             <input
               name="phone"
               type="tel"
               inputMode="numeric"
               autoFocus
-              placeholder="10-digit number"
+              placeholder={t("phonePlaceholder")}
               defaultValue={state.phone}
               className="h-10 rounded-md border-[1.5px] border-[#C9CFD4] px-3 text-[17px] tabular-nums text-[#14171A] outline-none focus:border-[#8B949C]"
             />
@@ -53,7 +53,7 @@ export function LoginForm({
             disabled={pending}
             className="h-10 rounded-md bg-[#1B6BB8] font-semibold text-white disabled:opacity-60"
           >
-            {pending ? "Sending…" : "Send OTP"}
+            {pending ? t("sending") : t("sendOtp")}
           </button>
         </>
       )}
@@ -61,17 +61,17 @@ export function LoginForm({
       {state.step === "otp" && (
         <>
           <p className="text-sm text-[#4A5057]">
-            Enter the OTP sent to {state.phone}.
+            {t("otpSentTo", { phone: state.phone })}
           </p>
           <label className="flex flex-col gap-1 text-sm text-[#4A5057]">
-            OTP
+            {t("otpLabel")}
             <input
               name="code"
               type="text"
               inputMode="numeric"
               autoFocus
               maxLength={6}
-              placeholder="6-digit code"
+              placeholder={t("otpPlaceholder")}
               className="h-10 rounded-md border-[1.5px] border-[#C9CFD4] px-3 text-[17px] tabular-nums text-[#14171A] outline-none focus:border-[#8B949C]"
             />
           </label>
@@ -82,23 +82,23 @@ export function LoginForm({
             disabled={pending}
             className="h-10 rounded-md bg-[#1B6BB8] font-semibold text-white disabled:opacity-60"
           >
-            {pending ? "Verifying…" : "Verify & sign in"}
+            {pending ? t("verifying") : t("verifyAndSignIn")}
           </button>
         </>
       )}
 
       {state.step === "pin" && (
         <>
-          <p className="text-sm text-[#4A5057]">{state.phone}</p>
+          <p className="text-sm tabular-nums text-[#4A5057]">{state.phone}</p>
           <label className="flex flex-col gap-1 text-sm text-[#4A5057]">
-            PIN
+            {t("pinLabel")}
             <input
               name="pin"
               type="password"
               inputMode="numeric"
               autoFocus
               maxLength={4}
-              placeholder="4-digit PIN"
+              placeholder={t("pinPlaceholder")}
               className="h-10 rounded-md border-[1.5px] border-[#C9CFD4] px-3 text-[17px] tabular-nums text-[#14171A] outline-none focus:border-[#8B949C]"
             />
           </label>
@@ -109,7 +109,7 @@ export function LoginForm({
             disabled={pending}
             className="h-10 rounded-md bg-[#1B6BB8] font-semibold text-white disabled:opacity-60"
           >
-            {pending ? "Signing in…" : "Sign in"}
+            {pending ? t("signingIn") : t("signIn")}
           </button>
           <button
             type="submit"
@@ -118,7 +118,7 @@ export function LoginForm({
             disabled={pending}
             className="h-10 rounded-md border-[1.5px] border-[#C9CFD4] font-semibold text-[#14171A] disabled:opacity-60"
           >
-            Use OTP instead
+            {t("useOtpInstead")}
           </button>
         </>
       )}
