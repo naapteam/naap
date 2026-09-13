@@ -26,6 +26,7 @@
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "recharts": "^3.10.1",
+    "server-only": "^0.0.1",
     "zod": "^4.6.4"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "15.5.25",
+    "playwright": "^1.63.0",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
     "typescript": "^5",

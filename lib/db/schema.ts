@@ -58,6 +58,22 @@ export const appUser = pgTable("app_user", {
   createdAt: createdAt(),
 });
 
+// ============ Auth support (not in architecture §3 — infra, not a domain object) ============
+
+export const otpCode = pgTable(
+  "otp_code",
+  {
+    id: id(),
+    phone: text("phone").notNull(),
+    codeHash: text("code_hash").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    attempts: integer("attempts").notNull().default(0),
+    consumedAt: timestamp("consumed_at", { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [index("otp_code_phone_idx").on(t.phone)],
+);
+
 // ============ Compliance vault (v1 — no integration, tracked expiry only) ============
 
 // kind: sawmill_licence | gst_cert | pollution_consent | factory_licence | other
