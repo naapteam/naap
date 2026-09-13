@@ -22,6 +22,11 @@
       "saved": "Saved",
       "sending": "Sending",
       "offline": "Offline — {count} waiting"
+    },
+    "shortcuts": {
+      "title": "Keyboard shortcuts",
+      "newIntake": "New intake",
+      "close": "Close"
     }
   },
   "auth": {

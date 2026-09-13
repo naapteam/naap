@@ -22,6 +22,11 @@
       "saved": "सेव हो गया",
       "sending": "भेजा जा रहा है",
       "offline": "ऑफ़लाइन — {count} बाकी"
+    },
+    "shortcuts": {
+      "title": "कीबोर्ड शॉर्टकट",
+      "newIntake": "नया Intake",
+      "close": "बंद करें"
     }
   },
   "auth": {

@@ -22,6 +22,11 @@
       "saved": "સેવ થયું",
       "sending": "મોકલાઈ રહ્યું છે",
       "offline": "ઓફલાઇન — {count} બાકી"
+    },
+    "shortcuts": {
+      "title": "કીબોર્ડ શોર્ટકટ",
+      "newIntake": "નવું Intake",
+      "close": "બંધ કરો"
     }
   },
   "auth": {
