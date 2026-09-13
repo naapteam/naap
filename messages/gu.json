@@ -275,5 +275,37 @@
     "recorded": "Despatch નોંધાયું.",
     "printChallan": "ચલણ પ્રિન્ટ કરો",
     "backToList": "Despatch પર પાછા જાઓ"
+  },
+  "reports": {
+    "title": "રિપોર્ટ",
+    "exportCsv": "CSV એક્સપોર્ટ કરો",
+    "tabs": {
+      "recovery": "રિકવરી",
+      "reconciliation": "રિકન્સિલિએશન",
+      "deadstock": "ડેડ સ્ટોક",
+      "suppliers": "સપ્લાયર સ્કોરકાર્ડ"
+    },
+    "from": "થી",
+    "to": "સુધી",
+    "apply": "લાગુ કરો",
+    "date": "તારીખ",
+    "lot": "લોટ",
+    "species": "જાત",
+    "input": "ઇનપુટ",
+    "output": "આઉટપુટ",
+    "recovery": "રિકવરી",
+    "noData": "આ ગાળામાં કોઈ કન્ફર્મ કટ નથી.",
+    "intake": "Intake",
+    "byproduct": "Byproduct",
+    "dispatched": "Despatch થયું",
+    "unexplained": "અસ્પષ્ટ",
+    "ageBand": "ઉંમર જૂથ",
+    "pieces": "પીસ",
+    "cft": "CFT",
+    "supplier": "સપ્લાયર",
+    "consignments": "ખેપ",
+    "cftSupplied": "પુરું પાડેલ CFT",
+    "avgRecovery": "સરેરાશ રિકવરી",
+    "supplierMinHint": "અહીં દેખાવા માટે સપ્લાયરની ઓછામાં ઓછી 2 કન્ફર્મ ખેપ જરૂરી છે."
   }
 }

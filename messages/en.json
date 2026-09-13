@@ -275,5 +275,37 @@
     "recorded": "Despatch recorded.",
     "printChallan": "Print challan",
     "backToList": "Back to Despatch"
+  },
+  "reports": {
+    "title": "Reports",
+    "exportCsv": "Export CSV",
+    "tabs": {
+      "recovery": "Recovery",
+      "reconciliation": "Reconciliation",
+      "deadstock": "Dead stock",
+      "suppliers": "Supplier scorecard"
+    },
+    "from": "From",
+    "to": "To",
+    "apply": "Apply",
+    "date": "Date",
+    "lot": "Lot",
+    "species": "Species",
+    "input": "Input",
+    "output": "Output",
+    "recovery": "Recovery",
+    "noData": "No confirmed cuts in this range.",
+    "intake": "Intake",
+    "byproduct": "Byproduct",
+    "dispatched": "Dispatched",
+    "unexplained": "Unexplained",
+    "ageBand": "Age band",
+    "pieces": "Pieces",
+    "cft": "CFT",
+    "supplier": "Supplier",
+    "consignments": "Consignments",
+    "cftSupplied": "CFT supplied",
+    "avgRecovery": "Avg recovery",
+    "supplierMinHint": "A supplier needs at least 2 confirmed consignments to appear here."
   }
 }

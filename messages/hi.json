@@ -275,5 +275,37 @@
     "recorded": "Despatch दर्ज हुआ।",
     "printChallan": "चालान प्रिंट करें",
     "backToList": "Despatch पर वापस जाएं"
+  },
+  "reports": {
+    "title": "रिपोर्ट",
+    "exportCsv": "CSV निर्यात करें",
+    "tabs": {
+      "recovery": "रिकवरी",
+      "reconciliation": "रीकंसीलिएशन",
+      "deadstock": "डेड स्टॉक",
+      "suppliers": "सप्लायर स्कोरकार्ड"
+    },
+    "from": "से",
+    "to": "तक",
+    "apply": "लागू करें",
+    "date": "तारीख़",
+    "lot": "लॉट",
+    "species": "प्रजाति",
+    "input": "इनपुट",
+    "output": "आउटपुट",
+    "recovery": "रिकवरी",
+    "noData": "इस अवधि में कोई कन्फर्म कट नहीं।",
+    "intake": "Intake",
+    "byproduct": "Byproduct",
+    "dispatched": "Despatch हुआ",
+    "unexplained": "अस्पष्ट",
+    "ageBand": "उम्र वर्ग",
+    "pieces": "पीस",
+    "cft": "CFT",
+    "supplier": "सप्लायर",
+    "consignments": "खेप",
+    "cftSupplied": "आपूर्ति किया CFT",
+    "avgRecovery": "औसत रिकवरी",
+    "supplierMinHint": "यहां दिखने के लिए सप्लायर की कम से कम 2 कन्फर्म खेप ज़रूरी हैं।"
   }
 }
