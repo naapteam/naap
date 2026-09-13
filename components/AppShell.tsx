@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { SyncBadge } from "./ui/SyncBadge";
 import { KeyboardShortcuts } from "./KeyboardShortcuts";
+import { OutboxProvider, useOutbox } from "./OutboxProvider";
 import type { Role } from "@/lib/auth/permissions";
 
 type NavItem = { href: string; key: string };
@@ -21,7 +22,20 @@ const NAV_ITEMS: NavItem[] = [
 
 const MASTERS_ITEM: NavItem = { href: "/masters", key: "masters" };
 
-export function AppShell({
+export function AppShell(props: {
+  user: { name: string; role: Role };
+  millName: string;
+  dateLabel: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <OutboxProvider>
+      <AppShellInner {...props} />
+    </OutboxProvider>
+  );
+}
+
+function AppShellInner({
   user,
   millName,
   dateLabel,
@@ -34,6 +48,7 @@ export function AppShell({
 }) {
   const pathname = usePathname();
   const t = useTranslations("common");
+  const outbox = useOutbox();
   // UI spec §5: Masters is owner-only in the nav, even though the
   // architecture §9 permission matrix gives manager a narrower ("limited")
   // capability on the resource itself — that capability is for a possible
@@ -53,7 +68,7 @@ export function AppShell({
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <LanguageSwitcher />
-          <SyncBadge status="saved" />
+          <SyncBadge status={outbox.status} waitingCount={outbox.waitingCount} />
           <form action="/api/logout" method="post">
             <button
               type="submit"

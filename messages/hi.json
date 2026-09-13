@@ -49,5 +49,71 @@
   "home": {
     "buildInProgress": "Naap — निर्माणाधीन।",
     "signedInAs": "{name} ({role}) के रूप में साइन इन है"
+  },
+  "intake": {
+    "title": "Intake",
+    "newIntake": "नया Intake",
+    "empty": "अभी तक कोई Intake दर्ज नहीं हुआ।",
+    "list": {
+      "date": "तारीख़",
+      "supplier": "सप्लायर",
+      "vehicle": "वाहन",
+      "species": "प्रजाति",
+      "lot": "लॉट",
+      "pieces": "पीस",
+      "cft": "CFT",
+      "variance": "अंतर",
+      "status": "स्थिति"
+    },
+    "status": {
+      "open": "खुला",
+      "closed": "बंद",
+      "cancelled": "रद्द"
+    },
+    "wizard": {
+      "step1Title": "विवरण",
+      "step2Title": "खराबी",
+      "step3Title": "Tally",
+      "step4Title": "बंद करें",
+      "supplier": "सप्लायर",
+      "vehicleNo": "वाहन नंबर",
+      "tpNumber": "TP नंबर",
+      "tpExpiry": "TP समाप्ति",
+      "arrivedAt": "आगमन तारीख़/समय",
+      "declaredPieces": "बताए गए पीस",
+      "declaredCft": "बताया गया CFT",
+      "declaredHint": "सप्लायर का दावा — वैकल्पिक।",
+      "next": "आगे",
+      "back": "पीछे",
+      "defectHint": "इससे अनुमान बेहतर बनता है। जो दिखे वह चुनें।",
+      "defect": {
+        "end_checks": "एंड चेक्स",
+        "sweep": "स्वीप",
+        "taper": "टेपर",
+        "borer": "बोरर होल",
+        "hollow": "खोखली आवाज़",
+        "stain": "दाग"
+      },
+      "species": "प्रजाति",
+      "convention": "कन्वेंशन",
+      "mode": "मोड",
+      "modePiece": "पीस",
+      "modeBulk": "बल्क",
+      "girth": "घेरा (इंच)",
+      "length": "लंबाई (फ़ीट)",
+      "cftColumn": "CFT",
+      "totalPieces": "पीस",
+      "totalCft": "कुल",
+      "bulkPieces": "कुल पीस",
+      "bulkCft": "कुल CFT",
+      "bay": "बे",
+      "varianceNote": "अंतर का कारण",
+      "varianceNoteHint": "तालीकृत और बताए गए के बीच बड़ा अंतर होने पर ज़रूरी।",
+      "close": "Intake बंद करें",
+      "closing": "बंद हो रहा है…",
+      "savedOffline": "ऑफ़लाइन सेव हुआ — कनेक्शन आने पर भेजा जाएगा।",
+      "success": "Intake बंद हुआ — लॉट {lotCode} बना।",
+      "backToList": "Intake पर वापस जाएं"
+    }
   }
 }

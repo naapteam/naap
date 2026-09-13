@@ -49,5 +49,71 @@
   "home": {
     "buildInProgress": "Naap — બિલ્ડ ચાલુ છે.",
     "signedInAs": "{name} ({role}) તરીકે સાઇન ઇન છે"
+  },
+  "intake": {
+    "title": "Intake",
+    "newIntake": "નવું Intake",
+    "empty": "હજુ સુધી કોઈ Intake નોંધાયું નથી.",
+    "list": {
+      "date": "તારીખ",
+      "supplier": "સપ્લાયર",
+      "vehicle": "વાહન",
+      "species": "જાત",
+      "lot": "લોટ",
+      "pieces": "પીસ",
+      "cft": "CFT",
+      "variance": "તફાવત",
+      "status": "સ્થિતિ"
+    },
+    "status": {
+      "open": "ખુલ્લું",
+      "closed": "બંધ",
+      "cancelled": "રદ"
+    },
+    "wizard": {
+      "step1Title": "વિગત",
+      "step2Title": "ખામી",
+      "step3Title": "Tally",
+      "step4Title": "બંધ કરો",
+      "supplier": "સપ્લાયર",
+      "vehicleNo": "વાહન નંબર",
+      "tpNumber": "TP નંબર",
+      "tpExpiry": "TP મુદત",
+      "arrivedAt": "આગમન તારીખ/સમય",
+      "declaredPieces": "જણાવેલા પીસ",
+      "declaredCft": "જણાવેલું CFT",
+      "declaredHint": "સપ્લાયરનો દાવો — વૈકલ્પિક.",
+      "next": "આગળ",
+      "back": "પાછળ",
+      "defectHint": "આનાથી અંદાજ વધુ સચોટ બને છે. જે દેખાય તે પસંદ કરો.",
+      "defect": {
+        "end_checks": "એન્ડ ચેક્સ",
+        "sweep": "સ્વીપ",
+        "taper": "ટેપર",
+        "borer": "બોરર હોલ",
+        "hollow": "પોકળ અવાજ",
+        "stain": "ડાઘ"
+      },
+      "species": "જાત",
+      "convention": "કન્વેન્શન",
+      "mode": "મોડ",
+      "modePiece": "પીસ",
+      "modeBulk": "બલ્ક",
+      "girth": "ઘેરાવો (ઇંચ)",
+      "length": "લંબાઈ (ફૂટ)",
+      "cftColumn": "CFT",
+      "totalPieces": "પીસ",
+      "totalCft": "કુલ",
+      "bulkPieces": "કુલ પીસ",
+      "bulkCft": "કુલ CFT",
+      "bay": "બે",
+      "varianceNote": "તફાવતનું કારણ",
+      "varianceNoteHint": "ગણેલા અને જણાવેલા વચ્ચે મોટો તફાવત હોય ત્યારે જરૂરી.",
+      "close": "Intake બંધ કરો",
+      "closing": "બંધ થઈ રહ્યું છે…",
+      "savedOffline": "ઓફલાઇન સેવ થયું — કનેક્શન આવે ત્યારે મોકલાશે.",
+      "success": "Intake બંધ થયું — લોટ {lotCode} બન્યો.",
+      "backToList": "Intake પર પાછા જાઓ"
+    }
   }
 }

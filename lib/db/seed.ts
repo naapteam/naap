@@ -11,6 +11,7 @@ import {
   species,
   location,
   sizePreset,
+  party,
 } from "./schema";
 
 const INCH_MM = 25.4;
@@ -70,6 +71,7 @@ async function main() {
     {
       millId: demoMill.id,
       nameEn: "Teak",
+      code: "TK",
       nameHi: "सागवान",
       nameMr: "सागवान",
       nameGu: "સાગ",
@@ -82,6 +84,7 @@ async function main() {
     {
       millId: demoMill.id,
       nameEn: "Sal",
+      code: "SA",
       nameHi: "साल",
       nameMr: "साल",
       nameGu: "સાલ",
@@ -94,6 +97,7 @@ async function main() {
     {
       millId: demoMill.id,
       nameEn: "Babul",
+      code: "BB",
       nameHi: "बबूल",
       nameMr: "बाभूळ",
       nameGu: "બાવળ",
@@ -106,6 +110,7 @@ async function main() {
     {
       millId: demoMill.id,
       nameEn: "Neem",
+      code: "NM",
       nameHi: "नीम",
       nameMr: "कडुनिंब",
       nameGu: "લીમડો",
@@ -118,6 +123,7 @@ async function main() {
     {
       millId: demoMill.id,
       nameEn: "Mango",
+      code: "MG",
       nameHi: "आम",
       nameMr: "आंबा",
       nameGu: "કેરી",
@@ -130,6 +136,7 @@ async function main() {
     {
       millId: demoMill.id,
       nameEn: "Eucalyptus",
+      code: "EU",
       nameHi: "नीलगिरी",
       nameMr: "निलगिरी",
       nameGu: "નીલગિરી",
@@ -142,6 +149,7 @@ async function main() {
     {
       millId: demoMill.id,
       nameEn: "Imported hardwood",
+      code: "IH",
       nameHi: "आयातित सागवान",
       nameMr: "आयातित लाकूड",
       nameGu: "આયાતી લાકડું",
@@ -205,6 +213,20 @@ async function main() {
       label: `${t}×${w}×${l}ft`,
     })),
   );
+
+  await db.insert(party).values([
+    { millId: demoMill.id, kind: "supplier", name: "Rane Timber Traders", place: "Nashik" },
+    { millId: demoMill.id, kind: "supplier", name: "Deshmukh Logs", place: "Kolhapur" },
+    { millId: demoMill.id, kind: "both", name: "Patil Wood Depot", place: "Pune" },
+    { millId: demoMill.id, kind: "customer", name: "Sunrise Furniture", place: "Mumbai" },
+    {
+      millId: demoMill.id,
+      kind: "broker",
+      name: "Kadam Associates",
+      place: "Pune",
+      commissionPct: "2",
+    },
+  ]);
 
   console.log("Seed complete:");
   console.log(`  org:  ${demoOrg.name} (${demoOrg.id})`);

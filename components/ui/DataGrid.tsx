@@ -1,7 +1,15 @@
+"use client";
+
 /**
  * Real <table> on desktop, the same data as stacked cards on phone — never
  * horizontal scroll (UI spec §9 quality floor). Breakpoint matches the app
  * shell's own sidebar/bottom-nav collapse at 840px.
+ *
+ * Client component (it attaches row-click handlers unconditionally) — a
+ * Server Component page should fetch rows and hand them to a small client
+ * wrapper that defines `columns` (which carries render functions) locally,
+ * rather than passing column defs down as props. See
+ * components/intake/IntakeListTable.tsx for the pattern.
  */
 export type DataGridColumn<T> = {
   key: string;

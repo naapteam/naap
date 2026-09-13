@@ -49,5 +49,71 @@
   "home": {
     "buildInProgress": "Naap — बांधकाम सुरू आहे.",
     "signedInAs": "{name} ({role}) म्हणून साइन इन आहे"
+  },
+  "intake": {
+    "title": "Intake",
+    "newIntake": "नवीन Intake",
+    "empty": "अजून कोणतेही Intake नोंदवलेले नाही.",
+    "list": {
+      "date": "तारीख",
+      "supplier": "सप्लायर",
+      "vehicle": "वाहन",
+      "species": "प्रजाती",
+      "lot": "लॉट",
+      "pieces": "पीस",
+      "cft": "CFT",
+      "variance": "फरक",
+      "status": "स्थिती"
+    },
+    "status": {
+      "open": "उघडे",
+      "closed": "बंद",
+      "cancelled": "रद्द"
+    },
+    "wizard": {
+      "step1Title": "तपशील",
+      "step2Title": "दोष",
+      "step3Title": "Tally",
+      "step4Title": "बंद करा",
+      "supplier": "सप्लायर",
+      "vehicleNo": "वाहन नंबर",
+      "tpNumber": "TP नंबर",
+      "tpExpiry": "TP मुदत",
+      "arrivedAt": "आगमन तारीख/वेळ",
+      "declaredPieces": "सांगितलेले पीस",
+      "declaredCft": "सांगितलेले CFT",
+      "declaredHint": "सप्लायरचा दावा — ऐच्छिक.",
+      "next": "पुढे",
+      "back": "मागे",
+      "defectHint": "यामुळे अंदाज अधिक अचूक होतो. जे दिसेल ते निवडा.",
+      "defect": {
+        "end_checks": "एंड चेक्स",
+        "sweep": "स्वीप",
+        "taper": "टेपर",
+        "borer": "बोरर होल",
+        "hollow": "पोकळ आवाज",
+        "stain": "डाग"
+      },
+      "species": "प्रजाती",
+      "convention": "कन्व्हेन्शन",
+      "mode": "मोड",
+      "modePiece": "पीस",
+      "modeBulk": "बल्क",
+      "girth": "घेर (इंच)",
+      "length": "लांबी (फूट)",
+      "cftColumn": "CFT",
+      "totalPieces": "पीस",
+      "totalCft": "एकूण",
+      "bulkPieces": "एकूण पीस",
+      "bulkCft": "एकूण CFT",
+      "bay": "बे",
+      "varianceNote": "फरकाचे कारण",
+      "varianceNoteHint": "मोजलेले व सांगितलेले यातील फरक मोठा असल्यास आवश्यक.",
+      "close": "Intake बंद करा",
+      "closing": "बंद होत आहे…",
+      "savedOffline": "ऑफलाइन सेव्ह झाले — कनेक्शन आल्यावर पाठवले जाईल.",
+      "success": "Intake बंद झाले — लॉट {lotCode} तयार झाला.",
+      "backToList": "Intake कडे परत जा"
+    }
   }
 }

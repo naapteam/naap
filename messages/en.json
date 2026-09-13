@@ -49,5 +49,71 @@
   "home": {
     "buildInProgress": "Naap — build in progress.",
     "signedInAs": "Signed in as {name} ({role})"
+  },
+  "intake": {
+    "title": "Intake",
+    "newIntake": "New intake",
+    "empty": "No intake logged yet.",
+    "list": {
+      "date": "Date",
+      "supplier": "Supplier",
+      "vehicle": "Vehicle",
+      "species": "Species",
+      "lot": "Lot",
+      "pieces": "Pieces",
+      "cft": "CFT",
+      "variance": "Variance",
+      "status": "Status"
+    },
+    "status": {
+      "open": "Open",
+      "closed": "Closed",
+      "cancelled": "Cancelled"
+    },
+    "wizard": {
+      "step1Title": "Header",
+      "step2Title": "Defects",
+      "step3Title": "Tally",
+      "step4Title": "Close",
+      "supplier": "Supplier",
+      "vehicleNo": "Vehicle number",
+      "tpNumber": "TP number",
+      "tpExpiry": "TP expiry",
+      "arrivedAt": "Arrival date/time",
+      "declaredPieces": "Declared pieces",
+      "declaredCft": "Declared CFT",
+      "declaredHint": "What the supplier claims — optional.",
+      "next": "Next",
+      "back": "Back",
+      "defectHint": "These help the tool predict your output. Tap what you can see.",
+      "defect": {
+        "end_checks": "End checks",
+        "sweep": "Sweep",
+        "taper": "Taper",
+        "borer": "Borer holes",
+        "hollow": "Hollow sound",
+        "stain": "Staining"
+      },
+      "species": "Species",
+      "convention": "Convention",
+      "mode": "Mode",
+      "modePiece": "Piece",
+      "modeBulk": "Bulk",
+      "girth": "Girth (in)",
+      "length": "Length (ft)",
+      "cftColumn": "CFT",
+      "totalPieces": "Pieces",
+      "totalCft": "Total",
+      "bulkPieces": "Total pieces",
+      "bulkCft": "Total CFT",
+      "bay": "Bay",
+      "varianceNote": "Variance note",
+      "varianceNoteHint": "Required when the gap between tallied and declared is large.",
+      "close": "Close intake",
+      "closing": "Closing…",
+      "savedOffline": "Saved offline — will send when connection returns.",
+      "success": "Intake closed — lot {lotCode} created.",
+      "backToList": "Back to Intake"
+    }
   }
 }

@@ -106,6 +106,12 @@ export const species = pgTable("species", {
   nameHi: text("name_hi"),
   nameMr: text("name_mr"),
   nameGu: text("name_gu"),
+  // Short trade code for lot auto-codes (e.g. "TK" for Teak in "TK-2609-01")
+  // — the architecture doc's lot-code example implies this but never
+  // defines its source; modeled as a per-species master field, same as
+  // colour_hex, since it's the same "mill's own marking language" idea
+  // (UI spec §2), not a naive substring of name_en.
+  code: text("code").notNull(),
   colourHex: text("colour_hex").notNull(),
   // hoppus | true | cbm
   defaultConvention: text("default_convention").notNull().default("hoppus"),
