@@ -180,5 +180,48 @@
       "confirmed": "કન્ફર્મ થયું",
       "cancelled": "રદ"
     }
+  },
+  "cutPlan": {
+    "step1Title": "લોટ પસંદ કરો",
+    "step2Title": "ટાર્ગેટ સાઈઝ",
+    "step3Title": "અંદાજ",
+    "pieces": "પીસ",
+    "since": "યાર્ડમાં ક્યારથી",
+    "noLots": "કાપવા માટે કોઈ લોટ ઉપલબ્ધ નથી.",
+    "thickness": "જાડાઈ (ઇંચ)",
+    "width": "પહોળાઈ (ઇંચ)",
+    "length": "લંબાઈ (ફૂટ)",
+    "targetQty": "ટાર્ગેટ જથ્થો",
+    "cftColumn": "CFT",
+    "offcutMatches": "Offcut મેચ",
+    "offcutSavings": "Offcut વાપરવાથી {cft} CFT તાજું લાકડું બચે છે.",
+    "useThese": "વાપરો",
+    "back": "પાછળ",
+    "next": "આગળ",
+    "input": "ઇનપુટ",
+    "expectedOutput": "અપેક્ષિત sawn આઉટપુટ",
+    "offcutStat": "Offcut",
+    "byproductStat": "Byproduct",
+    "wasteStat": "વેડફાટ",
+    "whyThisRange": "આ રેન્જ કેમ",
+    "show": "બતાવો",
+    "hide": "છુપાવો",
+    "speciesBand": "જાત બેન્ડ",
+    "largeLogs": "મોટા લાકડા",
+    "smallLogs": "નાના લાકડા",
+    "sizePenalty": "સાઈઝ પેનલ્ટી",
+    "defect": {
+      "end_checks": "એન્ડ ચેક્સ",
+      "sweep": "સ્વીપ",
+      "taper": "ટેપર",
+      "borer": "બોરર",
+      "hollow": "પોકળ",
+      "stain": "ડાઘ"
+    },
+    "savePlan": "યોજના સેવ કરો",
+    "saving": "સેવ થઈ રહ્યું છે…",
+    "saved": "Cut plan સેવ થઈ.",
+    "printSheet": "Cut sheet પ્રિન્ટ કરો",
+    "backToList": "Cut plan પર પાછા જાઓ"
   }
 }

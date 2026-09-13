@@ -180,5 +180,48 @@
       "confirmed": "कन्फर्म झाले",
       "cancelled": "रद्द"
     }
+  },
+  "cutPlan": {
+    "step1Title": "लॉट निवडा",
+    "step2Title": "टार्गेट साइज़",
+    "step3Title": "अंदाज",
+    "pieces": "पीस",
+    "since": "यार्डमध्ये केव्हापासून",
+    "noLots": "कापणीसाठी कोणतेही लॉट उपलब्ध नाही.",
+    "thickness": "जाडी (इंच)",
+    "width": "रुंदी (इंच)",
+    "length": "लांबी (फूट)",
+    "targetQty": "टार्गेट प्रमाण",
+    "cftColumn": "CFT",
+    "offcutMatches": "Offcut जुळणी",
+    "offcutSavings": "Offcut वापरल्याने {cft} CFT ताजे लाकूड वाचते.",
+    "useThese": "वापरा",
+    "back": "मागे",
+    "next": "पुढे",
+    "input": "इनपुट",
+    "expectedOutput": "अपेक्षित sawn आउटपुट",
+    "offcutStat": "Offcut",
+    "byproductStat": "Byproduct",
+    "wasteStat": "वाया गेलेले",
+    "whyThisRange": "ही रेंज का",
+    "show": "दाखवा",
+    "hide": "लपवा",
+    "speciesBand": "प्रजाती बँड",
+    "largeLogs": "मोठे लाकूड",
+    "smallLogs": "लहान लाकूड",
+    "sizePenalty": "साइज़ पेनल्टी",
+    "defect": {
+      "end_checks": "एंड चेक्स",
+      "sweep": "स्वीप",
+      "taper": "टेपर",
+      "borer": "बोरर",
+      "hollow": "पोकळ",
+      "stain": "डाग"
+    },
+    "savePlan": "योजना सेव्ह करा",
+    "saving": "सेव्ह होत आहे…",
+    "saved": "Cut plan सेव्ह झाली.",
+    "printSheet": "Cut sheet प्रिंट करा",
+    "backToList": "Cut plan कडे परत जा"
   }
 }

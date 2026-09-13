@@ -180,5 +180,48 @@
       "confirmed": "Confirmed",
       "cancelled": "Cancelled"
     }
+  },
+  "cutPlan": {
+    "step1Title": "Pick lot",
+    "step2Title": "Target sizes",
+    "step3Title": "Prediction",
+    "pieces": "pieces",
+    "since": "in yard since",
+    "noLots": "No lots with free logs to plan a cut against.",
+    "thickness": "Thickness (in)",
+    "width": "Width (in)",
+    "length": "Length (ft)",
+    "targetQty": "Target qty",
+    "cftColumn": "CFT",
+    "offcutMatches": "Offcut matches",
+    "offcutSavings": "Using offcuts saves {cft} CFT of fresh logs.",
+    "useThese": "Use these",
+    "back": "Back",
+    "next": "Next",
+    "input": "Input",
+    "expectedOutput": "Expected sawn output",
+    "offcutStat": "Offcuts",
+    "byproductStat": "Byproduct",
+    "wasteStat": "Waste",
+    "whyThisRange": "Why this range",
+    "show": "show",
+    "hide": "hide",
+    "speciesBand": "Species band",
+    "largeLogs": "Large logs",
+    "smallLogs": "Small logs",
+    "sizePenalty": "Size penalty",
+    "defect": {
+      "end_checks": "End checks",
+      "sweep": "Sweep",
+      "taper": "Taper",
+      "borer": "Borer",
+      "hollow": "Hollow",
+      "stain": "Staining"
+    },
+    "savePlan": "Save plan",
+    "saving": "Saving…",
+    "saved": "Cut plan saved.",
+    "printSheet": "Print cut sheet",
+    "backToList": "Back to Cut plan"
   }
 }

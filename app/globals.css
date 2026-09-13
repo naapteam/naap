@@ -72,3 +72,16 @@ body {
   color: var(--ink);
   font-family: var(--font-body-family), sans-serif;
 }
+
+/* Cut sheet (UI spec §6.3: "printable ... nothing else") strips the app
+   shell chrome when printed — see app/(app)/cut-plan/[id]/sheet. */
+@media print {
+  header,
+  nav {
+    display: none !important;
+  }
+  main {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+}
