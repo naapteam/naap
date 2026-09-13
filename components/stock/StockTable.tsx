@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { formatCft } from "@/lib/i18n/format";
@@ -36,27 +37,67 @@ export type StockRow = {
   bayCode: string | null;
 };
 
+function ReserveOffcutButton({ pieceId, status }: { pieceId: string; status: string }) {
+  const t = useTranslations("stock");
+  const router = useRouter();
+  const [pending, setPending] = useState(false);
+
+  if (status !== "free" && status !== "reserved") return null;
+
+  async function toggle(e: React.MouseEvent) {
+    e.stopPropagation();
+    setPending(true);
+    try {
+      const res = await fetch("/api/stock/offcut/reserve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pieceId, reserve: status === "free" }),
+      });
+      if (res.ok) router.refresh();
+    } finally {
+      setPending(false);
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      disabled={pending}
+      className={`h-8 rounded-md border-[1.5px] px-3 text-sm font-semibold disabled:opacity-60 ${
+        status === "reserved"
+          ? "border-[#B5730E] text-[#B5730E]"
+          : "border-[#1B6BB8] text-[#1B6BB8]"
+      }`}
+    >
+      {status === "reserved" ? t("unreserve") : t("useInCutPlan")}
+    </button>
+  );
+}
+
 export function StockTable({
   rows,
   mode = "sized",
 }: {
   rows: StockRow[];
-  mode?: "sized" | "byproduct";
+  mode?: "sized" | "byproduct" | "offcut";
 }) {
   const t = useTranslations("stock");
   const router = useRouter();
 
+  const speciesColumn: DataGridColumn<StockRow> = {
+    key: "species",
+    header: t("list.species"),
+    render: (r) =>
+      r.speciesNameEn ? (
+        <SpeciesChip name={r.speciesNameEn} colorHex={r.speciesColour ?? "#8B949C"} />
+      ) : (
+        "—"
+      ),
+  };
+
   const sizedColumns: DataGridColumn<StockRow>[] = [
-    {
-      key: "species",
-      header: t("list.species"),
-      render: (r) =>
-        r.speciesNameEn ? (
-          <SpeciesChip name={r.speciesNameEn} colorHex={r.speciesColour ?? "#8B949C"} />
-        ) : (
-          "—"
-        ),
-    },
+    speciesColumn,
     { key: "form", header: t("list.form"), render: (r) => t(`form.${r.form}`) },
     { key: "size", header: t("list.size"), render: (r) => formatPieceSize(r) },
     { key: "lot", header: t("list.lot"), render: (r) => r.lotCode ?? "—" },
@@ -88,17 +129,17 @@ export function StockTable({
     },
   ];
 
-  const byproductColumns: DataGridColumn<StockRow>[] = [
+  const offcutColumns: DataGridColumn<StockRow>[] = [
+    ...sizedColumns,
     {
-      key: "species",
-      header: t("list.species"),
-      render: (r) =>
-        r.speciesNameEn ? (
-          <SpeciesChip name={r.speciesNameEn} colorHex={r.speciesColour ?? "#8B949C"} />
-        ) : (
-          "—"
-        ),
+      key: "action",
+      header: "",
+      render: (r) => <ReserveOffcutButton pieceId={r.id} status={r.status} />,
     },
+  ];
+
+  const byproductColumns: DataGridColumn<StockRow>[] = [
+    speciesColumn,
     {
       key: "quantity",
       header: t("list.quantity"),
@@ -123,9 +164,12 @@ export function StockTable({
     },
   ];
 
+  const columns =
+    mode === "byproduct" ? byproductColumns : mode === "offcut" ? offcutColumns : sizedColumns;
+
   return (
     <DataGrid
-      columns={mode === "byproduct" ? byproductColumns : sizedColumns}
+      columns={columns}
       rows={rows}
       rowKey={(r) => r.id}
       onRowClick={(r) => r.lotId && router.push(`/stock/lot/${r.lotId}`)}

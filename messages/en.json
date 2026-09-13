@@ -152,6 +152,8 @@
       "offcut": "Offcut",
       "byproduct": "Byproduct"
     },
+    "useInCutPlan": "Use in cut plan",
+    "unreserve": "Unreserve",
     "status": {
       "free": "Free",
       "reserved": "Reserved",

@@ -36,7 +36,10 @@ export default async function StockPage({
 
   const conditions = [eq(piece.millId, millId)];
   if (tab === "offcut") {
-    conditions.push(eq(piece.purpose, "offcut"), eq(piece.status, "free"));
+    // Both free and reserved stay visible here — reserving is a toggle
+    // managed from this tab, so a reserved offcut can't quietly disappear
+    // with no way back (it would if this only matched status='free').
+    conditions.push(eq(piece.purpose, "offcut"), inArray(piece.status, ["free", "reserved"]));
   } else if (tab === "byproduct") {
     conditions.push(eq(piece.form, "byproduct"), eq(piece.status, "free"));
   } else {
@@ -157,7 +160,7 @@ export default async function StockPage({
         </form>
       )}
 
-      <StockTable rows={rows} mode={tab === "byproduct" ? "byproduct" : "sized"} />
+      <StockTable rows={rows} mode={tab === "all" ? "sized" : tab} />
     </div>
   );
 }

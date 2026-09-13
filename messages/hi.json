@@ -152,6 +152,8 @@
       "offcut": "Offcut",
       "byproduct": "Byproduct"
     },
+    "useInCutPlan": "Cut plan में इस्तेमाल करें",
+    "unreserve": "आरक्षण हटाएं",
     "status": {
       "free": "उपलब्ध",
       "reserved": "आरक्षित",
