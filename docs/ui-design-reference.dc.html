@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;-webkit-font-smoothing:antialiased}
+    *{box-sizing:border-box}
+    input,select,textarea,button{font-family:'Mukta',sans-serif}
+    ::placeholder{color:#8B949C}
+  </style>
+</helmet>
+
+<div style="--ink:#14171A;--ink-soft:#4A5057;--paper:#FFFFFF;--ground:#F2F4F5;--line:#C9CFD4;--line-strong:#8B949C;--mark-intake:#1B6BB8;--mark-wip:#B5730E;--mark-ready:#1F7A4D;--mark-idle:#7A3FA8;--mark-waste:#5F6B73;--mark-alert:#C03028;font-family:'Mukta',sans-serif;color:var(--ink);background:var(--ground);min-height:100vh;display:flex;flex-direction:column;font-size:16px">
+
+  <!-- HEADER -->
+  <div style="height:56px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:var(--paper);border-bottom:1.5px solid var(--line);position:sticky;top:0;z-index:20;gap:12px">
+    <div style="display:flex;align-items:center;gap:16px;min-width:0">
+      <div style="font-size:17px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Shree Balaji Timber Mill</div>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><span></span></sc-if>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+      <div style="display:none" data-desktop-only="true"></div>
+      <div style="font-size:14px;color:var(--ink-soft);white-space:nowrap" class="hide-mobile">{{ todayLabel }}</div>
+      <div style="display:flex;gap:2px;background:var(--ground);border-radius:6px;padding:2px">
+        <sc-for list="{{ langs }}" as="lg" hint-placeholder-count="4">
+          <button onClick="{{ setLang }}" data-lang="{{ lg.code }}" style-hover="{{ pillHover }}" style="border:none;background:{{ lg.active }};color:{{ lg.color }};font-size:12px;font-weight:600;padding:6px 9px;border-radius:5px;cursor:pointer">{{ lg.code }}</button>
+        </sc-for>
+      </div>
+      <div title="All entries saved" style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--mark-ready);padding:6px 10px;border-radius:6px;background:var(--ground);white-space:nowrap">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--mark-ready);display:inline-block"></span>Saved
+      </div>
+      <button onClick="{{ toggleShortcuts }}" title="Keyboard shortcuts" style="width:32px;height:32px;border-radius:6px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink-soft);font-weight:600;cursor:pointer">?</button>
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--mark-idle);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0">RK</div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex:1;min-height:0">
+    <!-- SIDEBAR (desktop) -->
+    <sc-if value="{{ showSidebar }}" hint-placeholder-val="{{ true }}">
+      <div style="width:212px;flex-shrink:0;background:var(--paper);border-right:1.5px solid var(--line);padding:14px 0;display:flex;flex-direction:column;gap:1px">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
+          <div onClick="{{ item.onClick }}" style="cursor:pointer;padding:10px 20px;font-size:15px;font-weight:{{ item.weight }};color:{{ item.color }};background:{{ item.bg }};border-left:3px solid {{ item.border }}">{{ item.label }}</div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- MAIN -->
+    <div style="flex:1;min-width:0;overflow-y:auto;padding:{{ mainPadding }}">
+      <div style="max-width:1400px;margin:0 auto;padding-bottom:{{ bottomPad }}">
+
+        <!-- ============ DASHBOARD ============ -->
+        <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:24px;font-weight:600;margin-bottom:18px">Dashboard</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:16px">
+            <sc-for list="{{ metricTiles }}" as="tile" hint-placeholder-count="4">
+              <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:18px 20px;display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:14px;color:var(--ink-soft)">{{ tile.label }}</div>
+                <div style="font-size:36px;font-weight:600;font-variant-numeric:tabular-nums">{{ tile.value }}</div>
+                <div style="font-size:12px;color:var(--ink-soft)">{{ tile.sub }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ showUnexplained }}" hint-placeholder-val="{{ false }}">
+            <div style="background:var(--mark-alert);color:#fff;border-radius:6px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+              <div style="font-size:16px;font-weight:600">Unexplained 42 CFT this month.</div>
+              <button onClick="{{ goReconciliation }}" style="background:transparent;border:none;color:#fff;font-weight:600;text-decoration:underline;cursor:pointer;font-size:15px">Look into it →</button>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">
+            <div style="flex:1;min-width:280px;background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:20px">
+              <div style="font-size:14px;color:var(--ink-soft);margin-bottom:8px">Pending confirmations</div>
+              <div style="font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;margin-bottom:10px">3 cuts awaiting approval</div>
+              <button onClick="{{ goCutplanConfirm }}" style="background:none;border:none;color:var(--mark-intake);font-weight:600;cursor:pointer;padding:0;font-size:15px">Open →</button>
+            </div>
+            <div style="flex:1;min-width:280px;background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:20px">
+              <div style="font-size:14px;color:var(--ink-soft);margin-bottom:8px">Prediction accuracy</div>
+              <div style="font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;margin-bottom:10px">Last 30 cuts: 24 inside range, 6 outside</div>
+              <div style="display:flex;height:10px;border-radius:5px;overflow:hidden">
+                <div style="width:80%;background:var(--mark-ready)"></div>
+                <div style="width:20%;background:var(--mark-wip)"></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:20px">
+            <div style="font-size:14px;color:var(--ink-soft);margin-bottom:12px">Auto-accept rate per user</div>
+            <sc-for list="{{ autoAcceptRows }}" as="u" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)">
+                <div style="font-size:15px">{{ u.name }}</div>
+                <div style="font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;color:{{ u.color }}">{{ u.rate }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- ============ INTAKE ============ -->
+        <sc-if value="{{ isIntake }}" hint-placeholder-val="{{ false }}">
+
+          <sc-if value="{{ intakeIsList }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+              <div style="font-size:24px;font-weight:600">Intake</div>
+              <button onClick="{{ startNewIntake }}" style="background:var(--ink);color:#fff;border:none;border-radius:6px;height:40px;padding:0 18px;font-size:15px;font-weight:600;cursor:pointer">New intake</button>
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+              <input placeholder="Search supplier or vehicle…" style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px;flex:1;min-width:200px;background:var(--paper);color:var(--ink)"/>
+              <select style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 10px;font-size:15px;background:var(--paper);color:var(--ink)"><option>All species</option></select>
+              <select style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 10px;font-size:15px;background:var(--paper);color:var(--ink)"><option>All status</option></select>
+            </div>
+
+            <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+              <sc-for list="{{ intakeList }}" as="row" hint-placeholder-count="5">
+                <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:14px;margin-bottom:10px">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                    <div style="display:flex;align-items:center;gap:6px;font-weight:600;font-size:15px"><span style="width:10px;height:10px;border-radius:50%;background:{{ row.speciesColor }};display:inline-block"></span>{{ row.species }}</div>
+                    <div style="font-size:12px;font-weight:600;color:#fff;background:{{ row.statusColor }};padding:2px 10px;border-radius:999px">{{ row.status }}</div>
+                  </div>
+                  <div style="font-size:13px;color:var(--ink-soft);margin-bottom:4px">{{ row.supplier }} · {{ row.vehicle }}</div>
+                  <div style="display:flex;justify-content:space-between;font-size:15px;font-variant-numeric:tabular-nums">
+                    <span>{{ row.date }}</span><span>{{ row.pieces }} pcs · {{ row.cft }} CFT</span>
+                  </div>
+                </div>
+              </sc-for>
+            </sc-if>
+            <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+              <table style="width:100%;border-collapse:collapse;background:var(--paper);border:1.5px solid var(--line);border-radius:6px;overflow:hidden">
+                <thead><tr style="background:var(--ground)">
+                  <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">DATE</th>
+                  <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">SUPPLIER</th>
+                  <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">VEHICLE</th>
+                  <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">SPECIES</th>
+                  <th style="text-align:right;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">PIECES</th>
+                  <th style="text-align:right;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">CFT</th>
+                  <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">STATUS</th>
+                  <th style="text-align:right;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">VARIANCE</th>
+                </tr></thead>
+                <tbody>
+                <sc-for list="{{ intakeList }}" as="row" hint-placeholder-count="5">
+                  <tr style="height:40px;border-top:1px solid var(--line)">
+                    <td style="padding:0 14px;font-size:15px;font-variant-numeric:tabular-nums">{{ row.date }}</td>
+                    <td style="padding:0 14px;font-size:15px">{{ row.supplier }}</td>
+                    <td style="padding:0 14px;font-size:15px;font-variant-numeric:tabular-nums">{{ row.vehicle }}</td>
+                    <td style="padding:0 14px;font-size:15px"><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:{{ row.speciesColor }};display:inline-block"></span>{{ row.species }}</span></td>
+                    <td style="padding:0 14px;font-size:15px;text-align:right;font-variant-numeric:tabular-nums">{{ row.pieces }}</td>
+                    <td style="padding:0 14px;font-size:15px;text-align:right;font-variant-numeric:tabular-nums;font-weight:600">{{ row.cft }}</td>
+                    <td style="padding:0 14px"><span style="font-size:12px;font-weight:600;color:#fff;background:{{ row.statusColor }};padding:2px 10px;border-radius:999px">{{ row.status }}</span></td>
+                    <td style="padding:0 14px;font-size:15px;text-align:right;font-variant-numeric:tabular-nums;color:{{ row.varianceColor }}">{{ row.variance }}</td>
+                  </tr>
+                </sc-for>
+                </tbody>
+              </table>
+            </sc-if>
+          </sc-if>
+
+          <!-- NEW INTAKE WIZARD -->
+          <sc-if value="{{ intakeIsNew }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+              <button onClick="{{ backToIntakeList }}" style="background:none;border:none;color:var(--ink-soft);font-size:20px;cursor:pointer;padding:0">←</button>
+              <div style="font-size:24px;font-weight:600">New intake</div>
+            </div>
+            <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1.5px solid var(--line)">
+              <sc-for list="{{ intakeSteps }}" as="st" hint-placeholder-count="4">
+                <div onClick="{{ st.onClick }}" style="cursor:pointer;padding:10px 16px;font-size:15px;font-weight:600;color:{{ st.color }};border-bottom:3px solid {{ st.border }};margin-bottom:-2px">{{ st.label }}</div>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ isIntakeStep1 }}" hint-placeholder-val="{{ true }}">
+              <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Supplier<input placeholder="Type to search…" value="{{ intakeForm.supplier }}" onChange="{{ setSupplier }}" style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px;color:var(--ink)"/></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Vehicle number<input value="{{ intakeForm.vehicle }}" onChange="{{ setVehicle }}" style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px;color:var(--ink)"/></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">TP number<input style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px;color:var(--ink)"/></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">TP expiry<input type="date" style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px;color:var(--ink)"/></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Arrival date<input type="date" value="{{ todayIso }}" style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px;color:var(--ink)"/></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Declared pieces (optional)<input style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px;color:var(--ink)"/></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Declared CFT (optional)<input style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px;color:var(--ink)"/></label>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isIntakeStep2 }}" hint-placeholder-val="{{ false }}">
+              <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:24px">
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+                  <sc-for list="{{ defectChips }}" as="d" hint-placeholder-count="6">
+                    <button onClick="{{ d.onClick }}" title="{{ d.hint }}" style="height:40px;padding:0 16px;border-radius:6px;border:1.5px solid {{ d.border }};background:{{ d.bg }};color:{{ d.color }};font-size:15px;font-weight:600;cursor:pointer">{{ d.label }}</button>
+                  </sc-for>
+                </div>
+                <div style="font-size:13px;color:var(--ink-soft);font-style:italic">These help the tool predict your output. Tap what you can see.</div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isIntakeStep3 }}" hint-placeholder-val="{{ false }}">
+              <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:24px">
+                <div style="display:flex;align-items:center;gap:24px;margin-bottom:16px;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:15px"><span style="color:var(--ink-soft)">Species:</span><span style="width:10px;height:10px;border-radius:50%;background:#8B5E34;display:inline-block"></span><b>Teak</b></div>
+                  <div style="font-size:15px;color:var(--ink-soft)">Convention: <b style="color:var(--ink)">Hoppus</b></div>
+                  <div style="display:flex;gap:2px;background:var(--ground);border-radius:6px;padding:2px">
+                    <button onClick="{{ setModePiece }}" style="border:none;height:32px;padding:0 14px;border-radius:5px;font-size:14px;font-weight:600;cursor:pointer;background:{{ pieceModeBg }};color:{{ pieceModeColor }}">Piece</button>
+                    <button onClick="{{ setModeBulk }}" style="border:none;height:32px;padding:0 14px;border-radius:5px;font-size:14px;font-weight:600;cursor:pointer;background:{{ bulkModeBg }};color:{{ bulkModeColor }}">Bulk</button>
+                  </div>
+                </div>
+
+                <sc-if value="{{ isBulkMode }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;gap:16px;flex-wrap:wrap">
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Total pieces<input value="{{ bulkPieces }}" onChange="{{ setBulkPieces }}" style="height:40px;width:160px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px;color:var(--ink)"/></label>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Total CFT<input value="{{ bulkCft }}" onChange="{{ setBulkCft }}" style="height:40px;width:160px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px;color:var(--ink)"/></label>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ isPieceMode }}" hint-placeholder-val="{{ true }}">
+                  <table style="width:100%;border-collapse:collapse">
+                    <thead><tr>
+                      <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft);width:40px">#</th>
+                      <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft)">GIRTH (IN)</th>
+                      <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft)">LENGTH (FT)</th>
+                      <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft)">CFT</th>
+                      <th style="width:40px"></th>
+                    </tr></thead>
+                    <tbody>
+                    <sc-for list="{{ tallyRows }}" as="row" hint-placeholder-count="3">
+                      <tr style="height:40px;border-top:1px solid var(--line)">
+                        <td style="padding:0 8px;font-size:14px;color:var(--ink-soft);font-variant-numeric:tabular-nums">{{ row.idx }}</td>
+                        <td style="padding:4px 8px"><input value="{{ row.girth }}" onChange="{{ row.onGirth }}" style="height:32px;width:90px;border:1.5px solid var(--line);border-radius:5px;padding:0 8px;font-size:15px;font-variant-numeric:tabular-nums;color:var(--ink)"/></td>
+                        <td style="padding:4px 8px"><input value="{{ row.length }}" onChange="{{ row.onLength }}" style="height:32px;width:90px;border:1.5px solid var(--line);border-radius:5px;padding:0 8px;font-size:15px;font-variant-numeric:tabular-nums;color:var(--ink)"/></td>
+                        <td style="padding:0 8px;font-size:16px;font-weight:600;color:var(--ink-soft);font-variant-numeric:tabular-nums">{{ row.cft }}</td>
+                        <td style="padding:0 8px"><button onClick="{{ row.onRepeat }}" title="Repeat value above" style="border:1px solid var(--line);background:var(--paper);border-radius:5px;width:28px;height:28px;cursor:pointer;color:var(--ink-soft)">⤓</button></td>
+                      </tr>
+                    </sc-for>
+                    </tbody>
+                  </table>
+                  <button onClick="{{ addTallyRow }}" style="margin-top:10px;background:none;border:none;color:var(--mark-intake);font-weight:600;cursor:pointer;padding:0;font-size:14px">+ Add row</button>
+                  <div style="display:flex;justify-content:flex-end;gap:24px;margin-top:14px;padding-top:14px;border-top:1.5px solid var(--line);font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">
+                    <div>Pieces: {{ tallyPieceCount }}</div>
+                    <div>Total: {{ tallyTotalCft }} CFT</div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isIntakeStep4 }}" hint-placeholder-val="{{ false }}">
+              <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:24px">
+                <div style="display:flex;gap:32px;margin-bottom:20px;flex-wrap:wrap">
+                  <div><div style="font-size:14px;color:var(--ink-soft)">Tallied</div><div style="font-size:24px;font-weight:600;font-variant-numeric:tabular-nums">{{ tallyTotalCft }} CFT</div></div>
+                  <div><div style="font-size:14px;color:var(--ink-soft)">Declared</div><div style="font-size:24px;font-weight:600;font-variant-numeric:tabular-nums">12.00 CFT</div></div>
+                  <div><div style="font-size:14px;color:var(--ink-soft)">Gap</div><div style="font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--mark-alert)">{{ closeGap }} CFT</div></div>
+                </div>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft);margin-bottom:16px">Note on the gap (required beyond threshold)<textarea onChange="{{ setCloseNote }}" style="min-height:60px;border:1.5px solid var(--line);border-radius:6px;padding:8px 12px;font-size:15px;color:var(--ink);resize:vertical"></textarea></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft);max-width:240px;margin-bottom:20px">Assign bay
+                  <select style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 10px;font-size:15px;color:var(--ink)">
+                    <sc-for list="{{ bays }}" as="b" hint-placeholder-count="4"><option>{{ b.code }}</option></sc-for>
+                  </select>
+                </label>
+                <div style="font-size:14px;color:var(--ink-soft);margin-bottom:16px">New lot code: <b style="color:var(--ink);font-variant-numeric:tabular-nums">TK-2609-02</b></div>
+                <button onClick="{{ createLot }}" style="background:var(--ink);color:#fff;border:none;border-radius:6px;height:40px;padding:0 20px;font-size:15px;font-weight:600;cursor:pointer">Create lot</button>
+              </div>
+            </sc-if>
+
+            <div style="display:flex;justify-content:space-between;margin-top:20px">
+              <button onClick="{{ intakeStepBack }}" style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;height:40px;padding:0 18px;font-size:15px;font-weight:600;cursor:pointer;color:var(--ink)">Back</button>
+              <button onClick="{{ intakeStepNext }}" style="background:var(--ink);color:#fff;border:none;border-radius:6px;height:40px;padding:0 18px;font-size:15px;font-weight:600;cursor:pointer">{{ intakeNextLabel }}</button>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <!-- ============ CUT PLAN ============ -->
+        <sc-if value="{{ isCutplan }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:24px;font-weight:600;margin-bottom:18px">Cut plan</div>
+          <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1.5px solid var(--line)">
+            <sc-for list="{{ cutSteps }}" as="st" hint-placeholder-count="3">
+              <div onClick="{{ st.onClick }}" style="cursor:pointer;padding:10px 16px;font-size:15px;font-weight:600;color:{{ st.color }};border-bottom:3px solid {{ st.border }};margin-bottom:-2px">{{ st.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ isCutStep1 }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
+              <sc-for list="{{ lotCards }}" as="lot" hint-placeholder-count="2">
+                <div onClick="{{ lot.onClick }}" style="cursor:pointer;background:var(--paper);border:1.5px solid {{ lot.borderColor }};border-radius:6px;padding:18px">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                    <div style="font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">{{ lot.code }}</div>
+                    <span style="width:10px;height:10px;border-radius:50%;background:{{ lot.speciesColor }};display:inline-block"></span>
+                  </div>
+                  <div style="font-size:15px;color:var(--ink-soft);margin-bottom:10px">{{ lot.pieces }} pcs · {{ lot.cft }} CFT · {{ lot.age }} in yard</div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap">
+                    <sc-for list="{{ lot.defects }}" as="df" hint-placeholder-count="2"><span style="font-size:12px;background:var(--ground);color:var(--ink-soft);padding:2px 8px;border-radius:999px">{{ df }}</span></sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isCutStep2 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+              <sc-for list="{{ sizePresets }}" as="sp" hint-placeholder-count="4">
+                <button onClick="{{ sp.onClick }}" style="height:40px;padding:0 16px;border-radius:6px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-size:15px;font-weight:600;cursor:pointer">{{ sp.label }}</button>
+              </sc-for>
+            </div>
+            <table style="width:100%;border-collapse:collapse;background:var(--paper);border:1.5px solid var(--line);border-radius:6px;margin-bottom:20px">
+              <thead><tr style="background:var(--ground)">
+                <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">THICKNESS (IN)</th>
+                <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">WIDTH (IN)</th>
+                <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">LENGTH (FT)</th>
+                <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">TARGET QTY</th>
+                <th style="text-align:right;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">CFT</th>
+              </tr></thead>
+              <tbody>
+              <sc-for list="{{ targetRows }}" as="row" hint-placeholder-count="2">
+                <tr style="height:44px;border-top:1px solid var(--line)">
+                  <td style="padding:4px 14px"><input value="{{ row.thickness }}" onChange="{{ row.onThickness }}" style="height:32px;width:70px;border:1.5px solid var(--line);border-radius:5px;padding:0 8px;font-size:15px;font-variant-numeric:tabular-nums"/></td>
+                  <td style="padding:4px 14px"><input value="{{ row.width }}" onChange="{{ row.onWidth }}" style="height:32px;width:70px;border:1.5px solid var(--line);border-radius:5px;padding:0 8px;font-size:15px;font-variant-numeric:tabular-nums"/></td>
+                  <td style="padding:4px 14px"><input value="{{ row.length }}" onChange="{{ row.onLength }}" style="height:32px;width:70px;border:1.5px solid var(--line);border-radius:5px;padding:0 8px;font-size:15px;font-variant-numeric:tabular-nums"/></td>
+                  <td style="padding:4px 14px"><input value="{{ row.qty }}" onChange="{{ row.onQty }}" style="height:32px;width:90px;border:1.5px solid var(--line);border-radius:5px;padding:0 8px;font-size:15px;font-variant-numeric:tabular-nums"/></td>
+                  <td style="padding:0 14px;text-align:right;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">{{ row.cft }}</td>
+                </tr>
+              </sc-for>
+              </tbody>
+            </table>
+
+            <div style="font-size:14px;color:var(--ink-soft);margin-bottom:10px">Using offcuts saves 34 CFT of fresh logs.</div>
+            <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;overflow:hidden">
+              <sc-for list="{{ offcutMatches }}" as="m" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--line)">
+                  <div style="font-size:15px">{{ m.size }} · {{ m.bay }} · {{ m.age }} old</div>
+                  <button style="background:var(--ground);border:none;border-radius:6px;height:32px;padding:0 14px;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink)">Use these</button>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isCutStep3 }}" hint-placeholder-val="{{ false }}">
+            <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:24px;margin-bottom:16px">
+              <div style="font-size:15px;color:var(--ink-soft);margin-bottom:14px">Input <span style="float:right;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums">480 CFT</span></div>
+              <div style="font-size:17px;font-weight:600;margin-bottom:6px">Expected sawn output <span style="font-variant-numeric:tabular-nums">250 – 278 CFT (52% – 58%)</span></div>
+              <div style="padding-left:16px;font-size:15px;color:var(--ink-soft);line-height:1.9;font-variant-numeric:tabular-nums">
+                <div>├ 2×4×12 — 140 – 156 pcs</div>
+                <div>└ 1×6×10 — 88 – 98 pcs</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:15px;padding:8px 0;font-variant-numeric:tabular-nums"><span>Offcuts</span><span>24 – 38 CFT</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:15px;padding:8px 0;font-variant-numeric:tabular-nums"><span>Byproduct (slab, sawdust)</span><span>77 CFT</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:15px;padding:8px 0;font-variant-numeric:tabular-nums"><span>Waste</span><span>12 – 20 CFT</span></div>
+
+              <button onClick="{{ toggleWhy }}" style="background:none;border:none;color:var(--mark-intake);font-weight:600;cursor:pointer;padding:8px 0 0;font-size:14px">{{ whyLabel }}</button>
+              <sc-if value="{{ showWhy }}" hint-placeholder-val="{{ false }}">
+                <div style="background:var(--ground);border-radius:6px;padding:14px 16px;margin-top:8px;font-size:14px;color:var(--ink-soft);font-variant-numeric:tabular-nums">
+                  <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Species band</span><span>52 – 62%</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Large logs</span><span>+3</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Size penalty</span><span>−2</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Sweep</span><span>−4.5</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Borer</span><span>−5.0</span></div>
+                </div>
+              </sc-if>
+            </div>
+            <div style="display:flex;gap:10px">
+              <button style="background:var(--ink);color:#fff;border:none;border-radius:6px;height:40px;padding:0 18px;font-size:15px;font-weight:600;cursor:pointer">Save plan</button>
+              <button style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;height:40px;padding:0 18px;font-size:15px;font-weight:600;cursor:pointer;color:var(--ink)">Print cut sheet</button>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <!-- ============ CONFIRM (reached from dashboard) ============ -->
+        <sc-if value="{{ isConfirm }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+            <button onClick="{{ goCutplan }}" style="background:none;border:none;color:var(--ink-soft);font-size:20px;cursor:pointer;padding:0">←</button>
+            <div style="font-size:24px;font-weight:600">Confirm — predicted vs actual</div>
+          </div>
+          <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:24px">
+            <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:16px;font-size:15px;color:var(--ink-soft);font-variant-numeric:tabular-nums">
+              <div>Lot <b style="color:var(--ink)">TK-2609-01</b></div>
+              <div>Cut on <b style="color:var(--ink)">12-09-2026</b></div>
+              <div>Predicted <b style="color:var(--ink)">250 – 278 CFT</b></div>
+            </div>
+            <table style="width:100%;border-collapse:collapse">
+              <thead><tr>
+                <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft)">SIZE</th>
+                <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft)">PREDICTED</th>
+                <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft)">ACTUAL</th>
+                <th style="width:30px"></th>
+              </tr></thead>
+              <tbody>
+              <sc-for list="{{ confirmRows }}" as="row" hint-placeholder-count="4">
+                <tr style="height:44px;border-top:1px solid var(--line)">
+                  <td style="padding:0 8px;font-size:15px">{{ row.label }}</td>
+                  <td style="padding:0 8px;font-size:15px;color:var(--ink-soft);font-variant-numeric:tabular-nums">{{ row.predRange }}</td>
+                  <td style="padding:4px 8px"><input value="{{ row.actual }}" onChange="{{ row.onChange }}" style="height:32px;width:90px;border:1.5px solid var(--line);border-radius:5px;padding:0 8px;font-size:15px;font-variant-numeric:tabular-nums"/></td>
+                  <td style="padding:0 8px;font-size:16px;font-weight:600;color:{{ row.statusColor }}">{{ row.statusIcon }}</td>
+                </tr>
+              </sc-for>
+              </tbody>
+            </table>
+            <div style="display:flex;gap:32px;margin-top:16px;padding-top:16px;border-top:1.5px solid var(--line);flex-wrap:wrap">
+              <div><div style="font-size:14px;color:var(--ink-soft)">Actual output</div><div style="font-size:24px;font-weight:600;font-variant-numeric:tabular-nums">244 CFT</div></div>
+              <div><div style="font-size:14px;color:var(--ink-soft)">Recovery</div><div style="font-size:24px;font-weight:600;font-variant-numeric:tabular-nums">50.8%</div></div>
+              <div><div style="font-size:14px;color:var(--ink-soft)">Predicted low</div><div style="font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--mark-wip)">250 CFT — below by 6</div></div>
+            </div>
+
+            <div style="margin-top:20px;font-size:15px;font-weight:600;margin-bottom:10px">Why was it lower?</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+              <sc-for list="{{ reasonChips }}" as="r" hint-placeholder-count="7">
+                <button onClick="{{ r.onClick }}" style="height:36px;padding:0 14px;border-radius:999px;border:1.5px solid {{ r.border }};background:{{ r.bg }};color:{{ r.color }};font-size:14px;font-weight:600;cursor:pointer">{{ r.label }}</button>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:10px">
+              <button style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;height:40px;padding:0 18px;font-size:15px;font-weight:600;cursor:pointer;color:var(--ink)">Cancel</button>
+              <button disabled="{{ confirmDisabled }}" style="background:{{ confirmBtnBg }};color:#fff;border:none;border-radius:6px;height:40px;padding:0 18px;font-size:15px;font-weight:600;cursor:{{ confirmBtnCursor }}">Confirm</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ STOCK ============ -->
+        <sc-if value="{{ isStock }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ stockDetailShown }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ closeStockDetail }}" style="background:none;border:none;color:var(--ink-soft);font-size:15px;cursor:pointer;padding:0;margin-bottom:14px">← Back to stock</button>
+            <div style="font-size:24px;font-weight:600;margin-bottom:6px">Lot {{ selectedLotCode }}</div>
+            <div style="font-size:15px;color:var(--ink-soft);margin-bottom:20px">Full traceability — intake, every conversion, every piece produced.</div>
+            <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:20px;margin-bottom:14px">
+              <div style="font-size:14px;color:var(--ink-soft);margin-bottom:8px">Intake</div>
+              <div style="font-size:15px">12-09-2026 · Ramesh Traders · 480 CFT declared</div>
+            </div>
+            <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:20px">
+              <div style="font-size:14px;color:var(--ink-soft);margin-bottom:8px">Conversions</div>
+              <div style="font-size:15px">1 cut plan · 244 CFT sawn · 31 CFT offcut · 77 CFT byproduct</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ stockDetailHidden }}" hint-placeholder-val="{{ true }}">
+            <div style="font-size:24px;font-weight:600;margin-bottom:16px">Stock</div>
+            <div style="display:flex;gap:4px;margin-bottom:16px;border-bottom:1.5px solid var(--line)">
+              <sc-for list="{{ stockTabs }}" as="t" hint-placeholder-count="3">
+                <div onClick="{{ t.onClick }}" style="cursor:pointer;padding:10px 16px;font-size:15px;font-weight:600;color:{{ t.color }};border-bottom:3px solid {{ t.border }};margin-bottom:-2px">{{ t.label }}</div>
+              </sc-for>
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+              <select style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 10px;font-size:15px;background:var(--paper)"><option>All species</option></select>
+              <select style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 10px;font-size:15px;background:var(--paper)"><option>All bays</option></select>
+              <select style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 10px;font-size:15px;background:var(--paper)"><option>Any size</option></select>
+            </div>
+            <table style="width:100%;border-collapse:collapse;background:var(--paper);border:1.5px solid var(--line);border-radius:6px">
+              <thead><tr style="background:var(--ground)">
+                <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">SPECIES</th>
+                <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">FORM</th>
+                <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">SIZE</th>
+                <th style="text-align:right;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">PIECES</th>
+                <th style="text-align:right;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">CFT</th>
+                <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">BAY</th>
+                <th style="text-align:right;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">AGE</th>
+                <th style="padding:10px 14px"></th>
+              </tr></thead>
+              <tbody>
+              <sc-for list="{{ stockRows }}" as="row" hint-placeholder-count="6">
+                <tr onClick="{{ row.onClick }}" style="height:40px;border-top:1px solid var(--line);cursor:pointer">
+                  <td style="padding:0 14px;font-size:15px"><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:{{ row.speciesColor }};display:inline-block"></span>{{ row.species }}</span></td>
+                  <td style="padding:0 14px;font-size:15px">{{ row.form }}</td>
+                  <td style="padding:0 14px;font-size:15px;font-variant-numeric:tabular-nums">{{ row.size }}</td>
+                  <td style="padding:0 14px;font-size:15px;text-align:right;font-variant-numeric:tabular-nums">{{ row.pieces }}</td>
+                  <td style="padding:0 14px;font-size:15px;text-align:right;font-variant-numeric:tabular-nums;font-weight:600">{{ row.cft }}</td>
+                  <td style="padding:0 14px;font-size:15px">{{ row.bay }}</td>
+                  <td style="padding:0 14px;font-size:15px;text-align:right;font-variant-numeric:tabular-nums;color:{{ row.ageColor }}">{{ row.age }}</td>
+                  <td style="padding:0 14px;font-size:13px;color:var(--mark-intake);font-weight:600">View →</td>
+                </tr>
+              </sc-for>
+              </tbody>
+            </table>
+          </sc-if>
+        </sc-if>
+
+        <!-- ============ DESPATCH ============ -->
+        <sc-if value="{{ isDespatch }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:24px;font-weight:600;margin-bottom:16px">Despatch</div>
+          <div style="display:flex;gap:20px;flex-wrap:wrap">
+            <div style="flex:2;min-width:300px;background:var(--paper);border:1.5px solid var(--line);border-radius:6px;overflow:hidden">
+              <sc-for list="{{ despatchRows }}" as="row" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-top:1px solid var(--line)">
+                  <input type="checkbox" checked="{{ row.checked }}" onChange="{{ row.onToggle }}" style="width:18px;height:18px"/>
+                  <span style="width:10px;height:10px;border-radius:50%;background:{{ row.speciesColor }};display:inline-block"></span>
+                  <div style="flex:1;font-size:15px">{{ row.species }} · {{ row.size }} · {{ row.bay }}</div>
+                  <div style="font-size:15px;font-variant-numeric:tabular-nums;font-weight:600">{{ row.cft }} CFT</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="flex:1;min-width:260px;background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:14px">
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Customer<input style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px"/></label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Vehicle number<input style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px"/></label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Challan number<input style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px"/></label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">TP number<input style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px"/></label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)">Date<input type="date" value="{{ todayIso }}" style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px"/></label>
+              <div style="display:flex;justify-content:space-between;padding-top:10px;border-top:1.5px solid var(--line);font-size:17px;font-weight:600;font-variant-numeric:tabular-nums"><span>Total</span><span>{{ despatchTotalCft }} CFT</span></div>
+              <button style="background:var(--ink);color:#fff;border:none;border-radius:6px;height:40px;font-size:15px;font-weight:600;cursor:pointer">Record despatch</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ REPORTS ============ -->
+        <sc-if value="{{ isReports }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:24px;font-weight:600;margin-bottom:16px">Reports</div>
+          <div style="display:flex;gap:4px;margin-bottom:16px;border-bottom:1.5px solid var(--line);flex-wrap:wrap">
+            <sc-for list="{{ reportTabs }}" as="t" hint-placeholder-count="4">
+              <div onClick="{{ t.onClick }}" style="cursor:pointer;padding:10px 16px;font-size:15px;font-weight:600;color:{{ t.color }};border-bottom:3px solid {{ t.border }};margin-bottom:-2px">{{ t.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ isReportRecovery }}" hint-placeholder-val="{{ true }}">
+            <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:20px">
+              <div style="font-size:14px;color:var(--ink-soft);margin-bottom:14px">Recovery by species (last 30 days)</div>
+              <sc-for list="{{ recoveryBars }}" as="b" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+                  <div style="width:90px;font-size:14px">{{ b.label }}</div>
+                  <div style="flex:1;background:var(--ground);border-radius:4px;height:16px;overflow:hidden"><div style="width:{{ b.pct }};height:100%;background:var(--mark-ready)"></div></div>
+                  <div style="width:44px;text-align:right;font-size:14px;font-variant-numeric:tabular-nums">{{ b.pct }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isReportReconciliation }}" hint-placeholder-val="{{ false }}">
+            <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:20px">
+              <sc-for list="{{ reconBars }}" as="b" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+                  <div style="width:110px;font-size:14px">{{ b.label }}</div>
+                  <div style="flex:1;background:var(--ground);border-radius:4px;height:16px;overflow:hidden"><div style="width:{{ b.pct }};height:100%;background:{{ b.color }}"></div></div>
+                  <div style="width:80px;text-align:right;font-size:14px;font-variant-numeric:tabular-nums">{{ b.value }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isReportDeadstock }}" hint-placeholder-val="{{ false }}">
+            <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:20px">
+              <sc-for list="{{ deadstockBars }}" as="b" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+                  <div style="width:110px;font-size:14px">{{ b.label }}</div>
+                  <div style="flex:1;background:var(--ground);border-radius:4px;height:16px;overflow:hidden"><div style="width:{{ b.pct }};height:100%;background:{{ b.color }}"></div></div>
+                  <div style="width:80px;text-align:right;font-size:14px;font-variant-numeric:tabular-nums">{{ b.value }} CFT</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isReportScorecard }}" hint-placeholder-val="{{ false }}">
+            <table style="width:100%;border-collapse:collapse;background:var(--paper);border:1.5px solid var(--line);border-radius:6px">
+              <thead><tr style="background:var(--ground)">
+                <th style="text-align:left;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">SUPPLIER</th>
+                <th style="text-align:right;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">CONSIGNMENTS</th>
+                <th style="text-align:right;padding:10px 14px;font-size:12px;color:var(--ink-soft);font-weight:400">AVG RECOVERY</th>
+              </tr></thead>
+              <tbody>
+              <sc-for list="{{ scorecardRows }}" as="s" hint-placeholder-count="4">
+                <tr style="height:40px;border-top:1px solid var(--line)">
+                  <td style="padding:0 14px;font-size:15px">{{ s.name }}</td>
+                  <td style="padding:0 14px;font-size:15px;text-align:right;font-variant-numeric:tabular-nums">{{ s.count }}</td>
+                  <td style="padding:0 14px;font-size:15px;text-align:right;font-variant-numeric:tabular-nums;font-weight:600">{{ s.recovery }}</td>
+                </tr>
+              </sc-for>
+              </tbody>
+            </table>
+          </sc-if>
+        </sc-if>
+
+        <!-- ============ MASTERS ============ -->
+        <sc-if value="{{ isMasters }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:24px;font-weight:600;margin-bottom:16px">Masters</div>
+          <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
+            <div style="width:190px;flex-shrink:0;display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ masterTabs }}" as="t" hint-placeholder-count="6">
+                <div onClick="{{ t.onClick }}" style="cursor:pointer;padding:9px 12px;font-size:14px;font-weight:600;border-radius:6px;color:{{ t.color }};background:{{ t.bg }}">{{ t.label }}</div>
+              </sc-for>
+            </div>
+            <div style="flex:1;min-width:280px;background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:20px">
+
+              <sc-if value="{{ isMasterSpecies }}" hint-placeholder-val="{{ true }}">
+                <table style="width:100%;border-collapse:collapse">
+                  <thead><tr>
+                    <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft)">SPECIES</th>
+                    <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft)">CONVENTION</th>
+                    <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft)">RECOVERY BAND</th>
+                    <th style="text-align:left;padding:8px;font-size:12px;color:var(--ink-soft)">BYPRODUCT %</th>
+                  </tr></thead>
+                  <tbody>
+                  <sc-for list="{{ speciesRows }}" as="sp" hint-placeholder-count="7">
+                    <tr style="height:40px;border-top:1px solid var(--line)">
+                      <td style="padding:0 8px;font-size:15px"><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:{{ sp.color }};display:inline-block"></span>{{ sp.label }}</span></td>
+                      <td style="padding:0 8px;font-size:15px">Hoppus</td>
+                      <td style="padding:0 8px;font-size:15px;font-variant-numeric:tabular-nums">{{ sp.band }}</td>
+                      <td style="padding:0 8px;font-size:15px;font-variant-numeric:tabular-nums">{{ sp.byproduct }}</td>
+                    </tr>
+                  </sc-for>
+                  </tbody>
+                </table>
+              </sc-if>
+
+              <sc-if value="{{ isMasterCompliance }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;justify-content:space-between;margin-bottom:14px">
+                  <div style="font-size:15px;color:var(--ink-soft)">Licences and certificates</div>
+                  <button style="background:var(--ink);color:#fff;border:none;border-radius:6px;height:36px;padding:0 14px;font-size:14px;font-weight:600;cursor:pointer">Add document</button>
+                </div>
+                <sc-for list="{{ complianceRows }}" as="c" hint-placeholder-count="3">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line)">
+                    <div>
+                      <div style="font-size:15px;font-weight:600">{{ c.label }}</div>
+                      <div style="font-size:13px;color:var(--ink-soft)">No. {{ c.number }} · expires {{ c.expiry }}</div>
+                    </div>
+                    <span style="font-size:12px;font-weight:600;color:#fff;background:{{ c.color }};padding:3px 10px;border-radius:999px">{{ c.daysLabel }}</span>
+                  </div>
+                </sc-for>
+              </sc-if>
+
+              <sc-if value="{{ isMasterRateLock }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+                  <div>
+                    <div style="font-size:16px;font-weight:600">Rate lock</div>
+                    <div style="font-size:13px;color:var(--ink-soft);max-width:420px">Used only for your own costing, never printed on any document, encrypted so that we cannot read it.</div>
+                  </div>
+                  <button onClick="{{ toggleRateLock }}" style="width:48px;height:28px;border-radius:14px;border:none;cursor:pointer;background:{{ rateLockTrackColor }};position:relative">
+                    <span style="position:absolute;top:2px;left:{{ rateLockKnobPos }};width:24px;height:24px;border-radius:50%;background:#fff;transition:left .15s"></span>
+                  </button>
+                </div>
+                <sc-if value="{{ rateLockOn }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:var(--ground);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:12px;max-width:360px">
+                    <div style="font-size:13px;color:var(--mark-alert);font-weight:600">A lost passphrase means unrecoverable data.</div>
+                    <input type="password" placeholder="Set a passphrase" style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px"/>
+                    <input type="password" placeholder="Confirm passphrase" style="height:40px;border:1.5px solid var(--line);border-radius:6px;padding:0 12px;font-size:15px"/>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-soft)"><input type="checkbox" style="width:16px;height:16px"/>I understand this cannot be recovered if lost</label>
+                  </div>
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft);max-width:280px;margin-top:16px">Your working rate (field label — appears on intake &amp; despatch, owner only)</label>
+                </sc-if>
+              </sc-if>
+
+              <sc-if value="{{ isMasterOther }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:15px;color:var(--ink-soft)">{{ masterOtherText }}</div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;bottom:0;left:0;right:0;background:var(--paper);border-top:1.5px solid var(--line);display:flex;z-index:20">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
+        <div onClick="{{ item.onClick }}" style="flex:1;text-align:center;padding:8px 2px;font-size:11px;font-weight:600;color:{{ item.mobileColor }}">{{ item.label }}</div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <!-- SHORTCUTS OVERLAY -->
+  <sc-if value="{{ showShortcuts }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ toggleShortcuts }}" style="position:fixed;inset:0;background:rgba(20,23,26,0.4);display:flex;align-items:center;justify-content:center;z-index:50">
+      <div style="background:var(--paper);border-radius:8px;padding:28px;min-width:280px" onClick="{{ stopProp }}">
+        <div style="font-size:17px;font-weight:600;margin-bottom:16px">Keyboard shortcuts</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:15px">
+          <div style="display:flex;justify-content:space-between"><span>New intake</span><b>N</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Cut plan</span><b>C</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Stock</span><b>S</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Search</span><b>/</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Close</span><b>Esc</b></div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1400, &quot;height&quot;: 900}, &quot;initialScreen&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;dashboard&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;dashboard&quot;, &quot;intake&quot;, &quot;cutplan&quot;, &quot;confirm&quot;, &quot;stock&quot;, &quot;despatch&quot;, &quot;reports&quot;, &quot;masters&quot;], &quot;section&quot;: &quot;Behavior&quot;}, &quot;rateLockEnabled&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Behavior&quot;}}">
+function cft(girth, length) {
+  const g = parseFloat(girth), l = parseFloat(length);
+  if (!g || !l) return '—';
+  return Math.round(((g / 4) ** 2 * l / 144) * 100) / 100;
+}
+function boardCft(t, w, l, qty) {
+  const tt = parseFloat(t), ww = parseFloat(w), ll = parseFloat(l), q = parseFloat(qty);
+  if (!tt || !ww || !ll || !q) return 0;
+  return Math.round((tt * ww * ll * q / 144) * 100) / 100;
+}
+
+class Component extends DCLogic {
+  state = {
+    screen: this.props.initialScreen || 'dashboard',
+    isMobile: false,
+    showShortcuts: false,
+    lang: 'EN',
+    intakeView: 'list',
+    intakeStep: 1,
+    intakeForm: { supplier: '', vehicle: '' },
+    defects: { endChecks: false, sweep: false, taper: false, borer: false, hollow: false, staining: false },
+    tallyMode: 'piece',
+    tallyRows: [{ girth: 36, length: 12 }, { girth: 34, length: 12 }, { girth: '', length: '' }],
+    bulkPieces: '', bulkCft: '',
+    closeNote: '',
+    cutStep: 1,
+    targetRows: [{ thickness: 2, width: 4, length: 12, qty: 150 }, { thickness: 1, width: 6, length: 10, qty: 90 }],
+    showWhy: false,
+    confirmActuals: { r0: 138, r1: 94, r2: 31, r3: 77 },
+    confirmReason: null,
+    stockTab: 'all',
+    stockDetailOpen: false,
+    despatchChecked: { 0: true, 1: true, 2: false, 3: true, 4: false },
+    reportsTab: 'recovery',
+    masterTab: 'species',
+    rateLockOn: this.props.rateLockEnabled || false,
+  };
+
+  componentDidMount() {
+    this.updateViewport();
+    window.addEventListener('resize', this.updateViewport);
+    window.addEventListener('keydown', this.handleKeyDown);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateViewport);
+    window.removeEventListener('keydown', this.handleKeyDown);
+  }
+  updateViewport = () => this.setState({ isMobile: window.innerWidth < 840 });
+  handleKeyDown = (e) => {
+    const tag = e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    if (e.key === '?') this.setState({ showShortcuts: true });
+    else if (e.key === 'Escape') this.setState({ showShortcuts: false });
+    else if (e.key === 'n') this.setState({ screen: 'intake', intakeView: 'new', intakeStep: 1 });
+    else if (e.key === 'c') this.setState({ screen: 'cutplan' });
+    else if (e.key === 's') this.setState({ screen: 'stock' });
+  };
+  stopProp = (e) => e.stopPropagation();
+  setScreen = (key) => this.setState({ screen: key, stockDetailOpen: false });
+  toggleShortcuts = () => this.setState((s) => ({ showShortcuts: !s.showShortcuts }));
+  setLang = (e) => this.setState({ lang: e.currentTarget.dataset.lang });
+
+  goReconciliation = () => this.setState({ screen: 'reports', reportsTab: 'reconciliation' });
+  goCutplanConfirm = () => this.setState({ screen: 'confirm' });
+  goCutplan = () => this.setState({ screen: 'cutplan' });
+
+  startNewIntake = () => this.setState({ intakeView: 'new', intakeStep: 1 });
+  backToIntakeList = () => this.setState({ intakeView: 'list' });
+  setIntakeStep = (n) => this.setState({ intakeStep: n });
+  intakeStepBack = () => this.setState((s) => ({ intakeStep: Math.max(1, s.intakeStep - 1) }));
+  intakeStepNext = () => this.setState((s) => (s.intakeStep >= 4 ? { intakeView: 'list', intakeStep: 1 } : { intakeStep: s.intakeStep + 1 }));
+  createLot = () => this.setState({ intakeView: 'list', intakeStep: 1 });
+  setSupplier = (e) => this.setState((s) => ({ intakeForm: { ...s.intakeForm, supplier: e.target.value } }));
+  setVehicle = (e) => this.setState((s) => ({ intakeForm: { ...s.intakeForm, vehicle: e.target.value } }));
+  toggleDefect = (key) => this.setState((s) => ({ defects: { ...s.defects, [key]: !s.defects[key] } }));
+  setModePiece = () => this.setState({ tallyMode: 'piece' });
+  setModeBulk = () => this.setState({ tallyMode: 'bulk' });
+  setBulkPieces = (e) => this.setState({ bulkPieces: e.target.value });
+  setBulkCft = (e) => this.setState({ bulkCft: e.target.value });
+  setCloseNote = (e) => this.setState({ closeNote: e.target.value });
+  updateTallyRow = (i, field, value) => this.setState((s) => {
+    const rows = s.tallyRows.map((r, idx) => (idx === i ? { ...r, [field]: value } : r));
+    if (i === rows.length - 1 && (rows[i].girth || rows[i].length)) rows.push({ girth: '', length: '' });
+    return { tallyRows: rows };
+  });
+  repeatTallyRow = (i) => this.setState((s) => {
+    if (i === 0) return {};
+    const prev = s.tallyRows[i - 1];
+    const rows = s.tallyRows.map((r, idx) => (idx === i ? { ...r, girth: prev.girth, length: prev.length } : r));
+    return { tallyRows: rows };
+  });
+  addTallyRow = () => this.setState((s) => ({ tallyRows: [...s.tallyRows, { girth: '', length: '' }] }));
+
+  setCutStep = (n) => this.setState({ cutStep: n });
+  toggleWhy = () => this.setState((s) => ({ showWhy: !s.showWhy }));
+  updateTargetRow = (i, field, value) => this.setState((s) => ({
+    targetRows: s.targetRows.map((r, idx) => (idx === i ? { ...r, [field]: value } : r)),
+  }));
+
+  setConfirmActual = (key, value) => this.setState((s) => ({ confirmActuals: { ...s.confirmActuals, [key]: value } }));
+  setConfirmReason = (label) => this.setState({ confirmReason: label });
+
+  setStockTab = (t) => this.setState({ stockTab: t, stockDetailOpen: false });
+  openStockDetail = () => this.setState({ stockDetailOpen: true });
+  closeStockDetail = () => this.setState({ stockDetailOpen: false });
+
+  toggleDespatchRow = (i) => this.setState((s) => ({ despatchChecked: { ...s.despatchChecked, [i]: !s.despatchChecked[i] } }));
+  setReportsTab = (t) => this.setState({ reportsTab: t });
+  setMasterTab = (t) => this.setState({ masterTab: t });
+  toggleRateLock = () => this.setState((s) => ({ rateLockOn: !s.rateLockOn }));
+
+  renderVals() {
+    const s = this.state;
+    const speciesList = [
+      { key: 'teak', label: 'Teak', color: '#8B5E34' },
+      { key: 'sal', label: 'Sal', color: '#C9A227' },
+      { key: 'babul', label: 'Babul', color: '#6B8E23' },
+      { key: 'neem', label: 'Neem', color: '#2E7D32' },
+      { key: 'mango', label: 'Mango', color: '#E07A29' },
+      { key: 'eucalyptus', label: 'Eucalyptus', color: '#4FA8A0' },
+      { key: 'imported', label: 'Imported', color: '#6C63A6' },
+    ];
+
+    const navKeys = [
+      ['dashboard', 'Dashboard'], ['intake', 'Intake'], ['cutplan', 'Cut plan'],
+      ['stock', 'Stock'], ['despatch', 'Despatch'], ['reports', 'Reports'], ['masters', 'Masters'],
+    ];
+    const navItems = navKeys.map(([key, label]) => {
+      const active = s.screen === key || (key === 'cutplan' && s.screen === 'confirm');
+      return {
+        label, onClick: () => this.setScreen(key),
+        weight: active ? 600 : 400,
+        color: active ? 'var(--ink)' : 'var(--ink-soft)',
+        bg: active ? 'var(--ground)' : 'transparent',
+        border: active ? 'var(--ink)' : 'transparent',
+        mobileColor: active ? 'var(--ink)' : 'var(--ink-soft)',
+      };
+    });
+
+    const langs = ['EN', 'HI', 'MR', 'GU'].map((code) => ({
+      code, active: s.lang === code ? 'var(--paper)' : 'transparent', color: s.lang === code ? 'var(--ink)' : 'var(--ink-soft)',
+    }));
+
+    // ---- Intake ----
+    const intakeList = [
+      { date: '12-09-2026', supplier: 'Ramesh Traders', vehicle: 'MH-12-AB-4521', species: 'Teak', speciesColor: '#8B5E34', pieces: 42, cft: 480, status: 'Tallied', statusColor: 'var(--mark-ready)', variance: '+2 CFT', varianceColor: 'var(--ink-soft)' },
+      { date: '11-09-2026', supplier: 'Gupta Timber Co', vehicle: 'MH-14-CD-7890', species: 'Sal', speciesColor: '#C9A227', pieces: 28, cft: 310, status: 'Pending tally', statusColor: 'var(--mark-wip)', variance: '—', varianceColor: 'var(--ink-soft)' },
+      { date: '10-09-2026', supplier: 'Bharat Wood Suppliers', vehicle: 'MH-12-EF-1122', species: 'Babul', speciesColor: '#6B8E23', pieces: 65, cft: 520, status: 'Tallied', statusColor: 'var(--mark-ready)', variance: '-4 CFT', varianceColor: 'var(--mark-alert)' },
+      { date: '09-09-2026', supplier: 'Ramesh Traders', vehicle: 'MH-12-GH-3345', species: 'Mango', speciesColor: '#E07A29', pieces: 36, cft: 210, status: 'Tallied', statusColor: 'var(--mark-ready)', variance: '0 CFT', varianceColor: 'var(--ink-soft)' },
+      { date: '08-09-2026', supplier: 'Nashik Log Depot', vehicle: 'MH-15-JK-9988', species: 'Eucalyptus', speciesColor: '#4FA8A0', pieces: 88, cft: 340, status: 'Tallied', statusColor: 'var(--mark-ready)', variance: '+1 CFT', varianceColor: 'var(--ink-soft)' },
+    ];
+
+    const intakeSteps = ['Header', 'Defects', 'Tally', 'Close'].map((label, i) => {
+      const n = i + 1, active = s.intakeStep === n;
+      return { label, onClick: () => this.setIntakeStep(n), color: active ? 'var(--ink)' : 'var(--ink-soft)', border: active ? 'var(--ink)' : 'transparent' };
+    });
+
+    const defectDefs = [
+      ['endChecks', 'End checks', 'Cracks radiating from the log ends'],
+      ['sweep', 'Sweep', 'Log curves along its length'],
+      ['taper', 'Taper', 'Diameter narrows sharply end to end'],
+      ['borer', 'Borer holes', 'Insect entry holes visible on the surface'],
+      ['hollow', 'Hollow sound', 'Dull, hollow sound when tapped'],
+      ['staining', 'Staining', 'Discolouration from fungus or storage'],
+    ];
+    const defectChips = defectDefs.map(([key, label, hint]) => {
+      const on = s.defects[key];
+      return {
+        label, hint, onClick: () => this.toggleDefect(key),
+        bg: on ? 'var(--mark-wip)' : 'var(--paper)', color: on ? '#fff' : 'var(--ink)', border: on ? 'var(--mark-wip)' : 'var(--line)',
+      };
+    });
+
+    const tallyRows = s.tallyRows.map((r, i) => ({
+      idx: i + 1, girth: r.girth, length: r.length, cft: cft(r.girth, r.length),
+      onGirth: (e) => this.updateTallyRow(i, 'girth', e.target.value),
+      onLength: (e) => this.updateTallyRow(i, 'length', e.target.value),
+      onRepeat: () => this.repeatTallyRow(i),
+    }));
+    const validTally = s.tallyRows.filter((r) => r.girth && r.length);
+    const tallyPieceCount = validTally.length;
+    const tallyTotalCft = Math.round(validTally.reduce((sum, r) => sum + (typeof cft(r.girth, r.length) === 'number' ? cft(r.girth, r.length) : 0), 0) * 100) / 100;
+
+    const bays = [{ code: 'Bay A1' }, { code: 'Bay A2' }, { code: 'Bay B1' }, { code: 'Bay C3' }];
+
+    // ---- Cut plan ----
+    const cutSteps = ['Pick lot', 'Target sizes', 'Prediction'].map((label, i) => {
+      const n = i + 1, active = s.cutStep === n;
+      return { label, onClick: () => this.setCutStep(n), color: active ? 'var(--ink)' : 'var(--ink-soft)', border: active ? 'var(--ink)' : 'transparent' };
+    });
+    const lotCards = [
+      { code: 'TK-2609-01', speciesColor: '#8B5E34', pieces: 42, cft: 480, age: '6 days', defects: ['Sweep', 'Borer holes'], borderColor: 'var(--line)', onClick: () => this.setCutStep(2) },
+      { code: 'SL-2608-04', speciesColor: '#C9A227', pieces: 28, cft: 310, age: '14 days', defects: ['End checks'], borderColor: 'var(--line)', onClick: () => this.setCutStep(2) },
+    ];
+    const sizePresets = ['2×4×12', '1×6×10', '2×6×10', '1×4×8'].map((label) => ({ label, onClick: () => {} }));
+    const targetRows = s.targetRows.map((r, i) => ({
+      ...r, cft: boardCft(r.thickness, r.width, r.length, r.qty),
+      onThickness: (e) => this.updateTargetRow(i, 'thickness', e.target.value),
+      onWidth: (e) => this.updateTargetRow(i, 'width', e.target.value),
+      onLength: (e) => this.updateTargetRow(i, 'length', e.target.value),
+      onQty: (e) => this.updateTargetRow(i, 'qty', e.target.value),
+    }));
+    const offcutMatches = [
+      { size: '2×4×10', bay: 'Bay A2', age: '22 days' },
+      { size: '1×6×8', bay: 'Bay B1', age: '31 days' },
+    ];
+
+    // ---- Confirm ----
+    const confirmDefs = [
+      { key: 'r0', label: '2×4×12', predLow: 140, predHigh: 156, unit: 'pcs' },
+      { key: 'r1', label: '1×6×10', predLow: 88, predHigh: 98, unit: 'pcs' },
+      { key: 'r2', label: 'Offcuts', predLow: 24, predHigh: 38, unit: 'CFT' },
+      { key: 'r3', label: 'Byproduct', predLow: 77, predHigh: 77, unit: 'CFT' },
+    ];
+    let anyOutside = false;
+    const confirmRows = confirmDefs.map((d) => {
+      const actual = s.confirmActuals[d.key];
+      const num = parseFloat(actual);
+      const inside = num >= d.predLow && num <= d.predHigh;
+      if (!inside) anyOutside = true;
+      return {
+        label: d.label, predRange: `${d.predLow} – ${d.predHigh} ${d.unit}`, actual,
+        onChange: (e) => this.setConfirmActual(d.key, e.target.value),
+        statusIcon: inside ? '✓' : '▲', statusColor: inside ? 'var(--mark-ready)' : 'var(--mark-wip)',
+      };
+    });
+    const reasonDefs = ['Hollow', 'Borer', 'Rot', 'Sweep', 'Wrong size cut', 'Operator', "Don't know"];
+    const reasonChips = reasonDefs.map((label) => {
+      const on = s.confirmReason === label;
+      return { label, onClick: () => this.setConfirmReason(label), bg: on ? 'var(--ink)' : 'var(--paper)', color: on ? '#fff' : 'var(--ink)', border: on ? 'var(--ink)' : 'var(--line)' };
+    });
+    const confirmDisabled = anyOutside && !s.confirmReason;
+
+    // ---- Stock ----
+    const allStockRows = [
+      { species: 'Teak', speciesColor: '#8B5E34', form: 'Log', size: '36×12', pieces: 40, cft: 470, bay: 'Bay A1', age: '6 days', ageColor: 'var(--ink)' },
+      { species: 'Sal', speciesColor: '#C9A227', form: 'Sawn', size: '2×4×12', pieces: 138, cft: 210, bay: 'Bay B2', age: '2 days', ageColor: 'var(--ink)' },
+      { species: 'Teak', speciesColor: '#8B5E34', form: 'Offcut', size: '2×4×10', pieces: 30, cft: 31, bay: 'Bay A2', age: '22 days', ageColor: 'var(--ink-soft)' },
+      { species: 'Babul', speciesColor: '#6B8E23', form: 'Offcut', size: '1×6×8', pieces: 18, cft: 14, bay: 'Bay B1', age: '31 days', ageColor: 'var(--mark-wip)' },
+      { species: 'Mango', speciesColor: '#E07A29', form: 'Byproduct', size: 'Slab', pieces: 0, cft: 77, bay: 'Bay C3', age: '80 days', ageColor: 'var(--mark-alert)' },
+      { species: 'Eucalyptus', speciesColor: '#4FA8A0', form: 'Log', size: '30×10', pieces: 55, cft: 260, bay: 'Bay A3', age: '3 days', ageColor: 'var(--ink)' },
+    ].map((r) => ({ ...r, onClick: () => this.openStockDetail() }));
+    const stockTabDefs = [['all', 'All stock'], ['offcut', 'Offcut bank'], ['byproduct', 'Byproduct']];
+    const stockTabs = stockTabDefs.map(([key, label]) => {
+      const active = s.stockTab === key;
+      return { label, onClick: () => this.setStockTab(key), color: active ? 'var(--ink)' : 'var(--ink-soft)', border: active ? 'var(--ink)' : 'transparent' };
+    });
+    const stockRows = s.stockTab === 'offcut' ? allStockRows.filter((r) => r.form === 'Offcut')
+      : s.stockTab === 'byproduct' ? allStockRows.filter((r) => r.form === 'Byproduct') : allStockRows;
+
+    // ---- Despatch ----
+    const despatchBase = allStockRows.filter((r) => r.form === 'Sawn' || r.form === 'Offcut').concat([
+      { species: 'Teak', speciesColor: '#8B5E34', form: 'Sawn', size: '1×4×8', cft: 90, bay: 'Bay B3' },
+      { species: 'Babul', speciesColor: '#6B8E23', form: 'Sawn', size: '2×6×10', cft: 120, bay: 'Bay B2' },
+    ]);
+    const despatchRows = despatchBase.map((r, i) => ({
+      species: r.species, speciesColor: r.speciesColor, size: r.size, bay: r.bay, cft: r.cft,
+      checked: !!s.despatchChecked[i], onToggle: () => this.toggleDespatchRow(i),
+    }));
+    const despatchTotalCft = despatchRows.filter((r) => r.checked).reduce((sum, r) => sum + r.cft, 0);
+
+    // ---- Reports ----
+    const reportTabDefs = [['recovery', 'Recovery'], ['reconciliation', 'Reconciliation'], ['deadstock', 'Dead stock'], ['scorecard', 'Supplier scorecard']];
+    const reportTabs = reportTabDefs.map(([key, label]) => {
+      const active = s.reportsTab === key;
+      return { label, onClick: () => this.setReportsTab(key), color: active ? 'var(--ink)' : 'var(--ink-soft)', border: active ? 'var(--ink)' : 'transparent' };
+    });
+    const recoveryBars = [
+      { label: 'Teak', pct: '58%' }, { label: 'Sal', pct: '54%' }, { label: 'Babul', pct: '49%' },
+      { label: 'Mango', pct: '51%' }, { label: 'Eucalyptus', pct: '56%' },
+    ];
+    const reconBars = [
+      { label: 'Intake', pct: '100%', color: 'var(--mark-intake)', value: '1,860 CFT' },
+      { label: 'Output', pct: '54%', color: 'var(--mark-ready)', value: '1,004 CFT' },
+      { label: 'Byproduct', pct: '30%', color: 'var(--mark-waste)', value: '558 CFT' },
+      { label: 'Unexplained', pct: '2%', color: 'var(--mark-alert)', value: '42 CFT' },
+    ];
+    const deadstockBars = [
+      { label: '0–30 days', pct: '70%', color: 'var(--mark-ready)', value: '2,100' },
+      { label: '31–60 days', pct: '35%', color: 'var(--mark-wip)', value: '820' },
+      { label: '61–90 days', pct: '18%', color: 'var(--mark-wip)', value: '410' },
+      { label: '90+ days', pct: '9%', color: 'var(--mark-alert)', value: '1,240' },
+    ];
+    const scorecardRows = [
+      { name: 'Ramesh Traders', count: 14, recovery: '57.2%' },
+      { name: 'Gupta Timber Co', count: 9, recovery: '52.8%' },
+      { name: 'Bharat Wood Suppliers', count: 6, recovery: '49.1%' },
+      { name: 'Nashik Log Depot', count: 3, recovery: '55.5%' },
+    ];
+
+    // ---- Masters ----
+    const masterTabDefs = [
+      ['species', 'Species'], ['grades', 'Grades'], ['bays', 'Bays'], ['presets', 'Size presets'],
+      ['parties', 'Parties'], ['users', 'Users'], ['thresholds', 'Thresholds'], ['profile', 'Mill profile'],
+      ['export', 'Data export'], ['ratelock', 'Rate lock'], ['compliance', 'Compliance'],
+    ];
+    const masterTabs = masterTabDefs.map(([key, label]) => {
+      const active = s.masterTab === key;
+      return { label, onClick: () => this.setMasterTab(key), color: active ? 'var(--ink)' : 'var(--ink-soft)', bg: active ? 'var(--ground)' : 'transparent' };
+    });
+    const speciesRows = speciesList.map((sp) => ({ ...sp, band: '48–62%', byproduct: '15%' }));
+    const complianceRows = [
+      { label: 'Timber Trade Licence', number: 'TL-4471', expiry: '15-11-2026', daysLabel: '63 days', color: 'var(--mark-ready)' },
+      { label: 'Fire NOC', number: 'FN-2290', expiry: '02-10-2026', daysLabel: '19 days', color: 'var(--mark-wip)' },
+      { label: 'Weighbridge Certification', number: 'WB-108', expiry: '20-09-2026', daysLabel: '7 days', color: 'var(--mark-alert)' },
+    ];
+    const rateLockOn = s.rateLockOn;
+    const otherText = {
+      grades: 'A, B, C grade definitions per species — cut quality thresholds used at confirm.',
+      bays: 'Bay A1, A2, A3, B1, B2, B3, C1, C2, C3 — capacity and current utilisation per bay.',
+      presets: "The mill's ten common sizes, ranked by use_count, shown as one-click chips in Cut plan.",
+      parties: 'Suppliers, customers and brokers — contact details and default terms.',
+      users: 'Owner, munshi/manager accounts — language, role, auto-accept rate.',
+      thresholds: 'Variance % that requires a note, dead-stock age bands, licence reminder windows.',
+      profile: 'Mill name, address, GST, licence numbers used across printed documents.',
+      export: 'One-click export of every table to Excel — say this in the first sales meeting.',
+    }[s.masterTab] || '';
+
+    return {
+      isMobile: s.isMobile, isDesktop: !s.isMobile, showSidebar: !s.isMobile,
+      mainPadding: s.isMobile ? '16px' : '24px', bottomPad: s.isMobile ? '60px' : '0px',
+      todayLabel: '13-09-2026', todayIso: '2026-09-13',
+      navItems, langs, setLang: this.setLang, showShortcuts: s.showShortcuts, toggleShortcuts: this.toggleShortcuts, stopProp: this.stopProp,
+
+      isDashboard: s.screen === 'dashboard',
+      metricTiles: [
+        { label: 'Intake', value: '480 CFT', sub: 'today' },
+        { label: 'Output', value: '268 CFT', sub: 'today' },
+        { label: 'Recovery', value: '55.8%', sub: 'this month' },
+        { label: 'Dead stock', value: '1,240 CFT', sub: 'over 60 days' },
+      ],
+      showUnexplained: true, goReconciliation: this.goReconciliation, goCutplanConfirm: this.goCutplanConfirm,
+      autoAcceptRows: [
+        { name: 'Suresh (munshi)', rate: '82%', color: 'var(--ink)' },
+        { name: 'Vinod (manager)', rate: '100%', color: 'var(--mark-alert)' },
+        { name: 'Owner', rate: '—', color: 'var(--ink-soft)' },
+      ],
+
+      isIntake: s.screen === 'intake', intakeIsList: s.intakeView === 'list', intakeIsNew: s.intakeView === 'new',
+      startNewIntake: this.startNewIntake, backToIntakeList: this.backToIntakeList,
+      intakeList, intakeSteps,
+      isIntakeStep1: s.intakeStep === 1, isIntakeStep2: s.intakeStep === 2, isIntakeStep3: s.intakeStep === 3, isIntakeStep4: s.intakeStep === 4,
+      intakeForm: s.intakeForm, setSupplier: this.setSupplier, setVehicle: this.setVehicle,
+      defectChips,
+      tallyMode: s.tallyMode, isPieceMode: s.tallyMode === 'piece', isBulkMode: s.tallyMode === 'bulk',
+      setModePiece: this.setModePiece, setModeBulk: this.setModeBulk,
+      pieceModeBg: s.tallyMode === 'piece' ? 'var(--paper)' : 'transparent', pieceModeColor: s.tallyMode === 'piece' ? 'var(--ink)' : 'var(--ink-soft)',
+      bulkModeBg: s.tallyMode === 'bulk' ? 'var(--paper)' : 'transparent', bulkModeColor: s.tallyMode === 'bulk' ? 'var(--ink)' : 'var(--ink-soft)',
+      bulkPieces: s.bulkPieces, bulkCft: s.bulkCft, setBulkPieces: this.setBulkPieces, setBulkCft: this.setBulkCft,
+      tallyRows, addTallyRow: this.addTallyRow, tallyPieceCount, tallyTotalCft,
+      closeGap: (12 - tallyTotalCft).toFixed(2), setCloseNote: this.setCloseNote, bays, createLot: this.createLot,
+      intakeStepBack: this.intakeStepBack, intakeStepNext: this.intakeStepNext,
+      intakeNextLabel: s.intakeStep >= 4 ? 'Create lot' : 'Next',
+
+      isCutplan: s.screen === 'cutplan', cutSteps,
+      isCutStep1: s.cutStep === 1, isCutStep2: s.cutStep === 2, isCutStep3: s.cutStep === 3,
+      lotCards, sizePresets, targetRows, offcutMatches,
+      showWhy: s.showWhy, whyLabel: s.showWhy ? 'Why this range [ hide ]' : 'Why this range [ show ]', toggleWhy: this.toggleWhy,
+
+      isConfirm: s.screen === 'confirm', confirmRows, reasonChips, confirmDisabled,
+      confirmBtnBg: confirmDisabled ? 'var(--line-strong)' : 'var(--ink)', confirmBtnCursor: confirmDisabled ? 'not-allowed' : 'pointer',
+      goCutplan: this.goCutplan,
+
+      isStock: s.screen === 'stock', stockTabs, stockRows,
+      stockDetailShown: s.stockDetailOpen, stockDetailHidden: !s.stockDetailOpen, selectedLotCode: 'TK-2609-01', closeStockDetail: this.closeStockDetail,
+
+      isDespatch: s.screen === 'despatch', despatchRows, despatchTotalCft,
+
+      isReports: s.screen === 'reports', reportTabs,
+      isReportRecovery: s.reportsTab === 'recovery', isReportReconciliation: s.reportsTab === 'reconciliation',
+      isReportDeadstock: s.reportsTab === 'deadstock', isReportScorecard: s.reportsTab === 'scorecard',
+      recoveryBars, reconBars, deadstockBars, scorecardRows,
+
+      isMasters: s.screen === 'masters', masterTabs,
+      isMasterSpecies: s.masterTab === 'species', isMasterCompliance: s.masterTab === 'compliance',
+      isMasterRateLock: s.masterTab === 'ratelock', isMasterOther: !['species', 'compliance', 'ratelock'].includes(s.masterTab),
+      speciesRows, complianceRows, masterOtherText: otherText,
+      rateLockOn, toggleRateLock: this.toggleRateLock,
+      rateLockTrackColor: rateLockOn ? 'var(--mark-ready)' : 'var(--line)', rateLockKnobPos: rateLockOn ? '22px' : '2px',
+    };
+  }
+}
+</script>
+</body>
+</html>
