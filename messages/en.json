@@ -115,5 +115,70 @@
       "success": "Intake closed — lot {lotCode} created.",
       "backToList": "Back to Intake"
     }
+  },
+  "stock": {
+    "title": "Stock",
+    "empty": "No stock matching filter.",
+    "tabs": {
+      "all": "All",
+      "offcut": "Offcut bank",
+      "byproduct": "Byproduct"
+    },
+    "filters": {
+      "form": "Form",
+      "allForms": "All forms",
+      "species": "Species",
+      "allSpecies": "All species",
+      "bay": "Bay",
+      "allBays": "All bays",
+      "apply": "Filter"
+    },
+    "list": {
+      "species": "Species",
+      "form": "Form",
+      "size": "Size",
+      "lot": "Lot",
+      "pieces": "Pieces",
+      "cft": "CFT",
+      "bay": "Bay",
+      "age": "Age (days)",
+      "status": "Status",
+      "quantity": "Quantity"
+    },
+    "form": {
+      "log": "Log",
+      "cant": "Cant",
+      "sawn": "Sawn",
+      "offcut": "Offcut",
+      "byproduct": "Byproduct"
+    },
+    "status": {
+      "free": "Free",
+      "reserved": "Reserved",
+      "consumed": "Consumed",
+      "dispatched": "Dispatched",
+      "cancelled": "Cancelled"
+    },
+    "lotDetail": {
+      "title": "Lot {code}",
+      "back": "Back to Stock",
+      "intakeHeader": "Intake",
+      "supplier": "Supplier",
+      "vehicle": "Vehicle",
+      "arrivedAt": "Arrived",
+      "defects": "Defects",
+      "noDefects": "None recorded",
+      "conversions": "Conversions",
+      "noConversions": "No conversions yet.",
+      "pieces": "Pieces",
+      "noPieces": "No pieces recorded."
+    }
+  },
+  "conversion": {
+    "status": {
+      "planned": "Planned",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled"
+    }
   }
 }

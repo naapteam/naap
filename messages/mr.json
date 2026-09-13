@@ -115,5 +115,70 @@
       "success": "Intake बंद झाले — लॉट {lotCode} तयार झाला.",
       "backToList": "Intake कडे परत जा"
     }
+  },
+  "stock": {
+    "title": "स्टॉक",
+    "empty": "फिल्टरशी जुळणारा स्टॉक नाही.",
+    "tabs": {
+      "all": "सर्व",
+      "offcut": "Offcut बँक",
+      "byproduct": "Byproduct"
+    },
+    "filters": {
+      "form": "फॉर्म",
+      "allForms": "सर्व फॉर्म",
+      "species": "प्रजाती",
+      "allSpecies": "सर्व प्रजाती",
+      "bay": "बे",
+      "allBays": "सर्व बे",
+      "apply": "फिल्टर करा"
+    },
+    "list": {
+      "species": "प्रजाती",
+      "form": "फॉर्म",
+      "size": "साइज़",
+      "lot": "लॉट",
+      "pieces": "पीस",
+      "cft": "CFT",
+      "bay": "बे",
+      "age": "वय (दिवस)",
+      "status": "स्थिती",
+      "quantity": "प्रमाण"
+    },
+    "form": {
+      "log": "Log",
+      "cant": "Cant",
+      "sawn": "Sawn",
+      "offcut": "Offcut",
+      "byproduct": "Byproduct"
+    },
+    "status": {
+      "free": "उपलब्ध",
+      "reserved": "राखीव",
+      "consumed": "वापरले गेले",
+      "dispatched": "डिस्पॅच झाले",
+      "cancelled": "रद्द"
+    },
+    "lotDetail": {
+      "title": "लॉट {code}",
+      "back": "स्टॉककडे परत जा",
+      "intakeHeader": "Intake",
+      "supplier": "सप्लायर",
+      "vehicle": "वाहन",
+      "arrivedAt": "आगमन",
+      "defects": "दोष",
+      "noDefects": "काही नोंदवलेले नाही",
+      "conversions": "Conversion",
+      "noConversions": "अजून कोणतेही Conversion नाही.",
+      "pieces": "पीस",
+      "noPieces": "कोणतेही पीस नोंदवलेले नाही."
+    }
+  },
+  "conversion": {
+    "status": {
+      "planned": "नियोजित",
+      "confirmed": "कन्फर्म झाले",
+      "cancelled": "रद्द"
+    }
   }
 }

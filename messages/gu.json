@@ -115,5 +115,70 @@
       "success": "Intake બંધ થયું — લોટ {lotCode} બન્યો.",
       "backToList": "Intake પર પાછા જાઓ"
     }
+  },
+  "stock": {
+    "title": "સ્ટોક",
+    "empty": "ફિલ્ટર સાથે મેળ ખાતો કોઈ સ્ટોક નથી.",
+    "tabs": {
+      "all": "બધું",
+      "offcut": "Offcut બેંક",
+      "byproduct": "Byproduct"
+    },
+    "filters": {
+      "form": "ફોર્મ",
+      "allForms": "બધા ફોર્મ",
+      "species": "જાત",
+      "allSpecies": "બધી જાતો",
+      "bay": "બે",
+      "allBays": "બધા બે",
+      "apply": "ફિલ્ટર કરો"
+    },
+    "list": {
+      "species": "જાત",
+      "form": "ફોર્મ",
+      "size": "સાઈઝ",
+      "lot": "લોટ",
+      "pieces": "પીસ",
+      "cft": "CFT",
+      "bay": "બે",
+      "age": "ઉંમર (દિવસ)",
+      "status": "સ્થિતિ",
+      "quantity": "જથ્થો"
+    },
+    "form": {
+      "log": "Log",
+      "cant": "Cant",
+      "sawn": "Sawn",
+      "offcut": "Offcut",
+      "byproduct": "Byproduct"
+    },
+    "status": {
+      "free": "ઉપલબ્ધ",
+      "reserved": "આરક્ષિત",
+      "consumed": "વપરાયું",
+      "dispatched": "ડિસ્પેચ થયું",
+      "cancelled": "રદ"
+    },
+    "lotDetail": {
+      "title": "લોટ {code}",
+      "back": "સ્ટોક પર પાછા જાઓ",
+      "intakeHeader": "Intake",
+      "supplier": "સપ્લાયર",
+      "vehicle": "વાહન",
+      "arrivedAt": "આગમન",
+      "defects": "ખામી",
+      "noDefects": "કંઈ નોંધાયું નથી",
+      "conversions": "Conversion",
+      "noConversions": "હજુ સુધી કોઈ Conversion નથી.",
+      "pieces": "પીસ",
+      "noPieces": "કોઈ પીસ નોંધાયેલ નથી."
+    }
+  },
+  "conversion": {
+    "status": {
+      "planned": "આયોજિત",
+      "confirmed": "કન્ફર્મ થયું",
+      "cancelled": "રદ"
+    }
   }
 }
