@@ -27,5 +27,12 @@ export default async function NewIntakePage() {
       .where(and(eq(location.millId, millId), eq(location.kind, "yard"))),
   ]);
 
-  return <IntakeWizard suppliers={suppliers} speciesList={speciesList} bays={bays} />;
+  return (
+    <IntakeWizard
+      suppliers={suppliers}
+      speciesList={speciesList}
+      bays={bays}
+      isOwner={session.role === "owner"}
+    />
+  );
 }

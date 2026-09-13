@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, eq, inArray } from "drizzle-orm";
 import { db } from "@/lib/db/client";
-import { despatch, despatchLine, piece } from "@/lib/db/schema";
+import { despatch, despatchLine, piece, secureNote } from "@/lib/db/schema";
 import { AuthError, requireCan } from "@/lib/auth/guard";
 import { writeAudit } from "@/lib/auth/audit";
 import { createDespatchPayloadSchema } from "@/lib/despatch/schema";
@@ -65,6 +65,16 @@ export async function POST(req: Request) {
         status: "done",
       })
       .returning();
+
+    if (body.rateCiphertext && body.rateIv) {
+      await tx.insert(secureNote).values({
+        millId,
+        entityTable: "despatch",
+        entityId: despatchRow.id,
+        ciphertext: body.rateCiphertext,
+        iv: body.rateIv,
+      });
+    }
 
     await tx.insert(despatchLine).values(
       pieces.map((p) => ({

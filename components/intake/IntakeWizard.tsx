@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useDraft } from "@/lib/offline/useDraft";
 import { useOutbox } from "@/components/OutboxProvider";
+import { useRateLock } from "@/components/RateLockProvider";
 import { TypeAhead } from "@/components/ui/TypeAhead";
 import { TallyGrid, type Mode, type TallyRow } from "./TallyGrid";
 import { formatCft } from "@/lib/i18n/format";
 import { MM_PER_FOOT, MM_PER_INCH, hoppusCft } from "@/lib/volume";
+import { encryptWithRateKey } from "@/lib/crypto/rateLock";
 import { DEFECT_CODES } from "@/lib/intake/schema";
 import type { CloseIntakePayload } from "@/lib/intake/schema";
 
@@ -69,20 +71,26 @@ export function IntakeWizard({
   suppliers,
   speciesList,
   bays,
+  isOwner = false,
 }: {
   suppliers: Supplier[];
   speciesList: SpeciesOption[];
   bays: Bay[];
+  isOwner?: boolean;
 }) {
   const t = useTranslations("intake.wizard");
   const router = useRouter();
   const outbox = useOutbox();
+  const rateLock = useRateLock();
   const [draft, setDraft, clearDraft] = useDraft<Draft>("intake-new", initialDraft);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [result, setResult] = useState<
     { lotCode: string; offline: boolean } | null
   >(null);
+  // Kept out of `draft` deliberately — useDraft autosaves to localStorage,
+  // and a plaintext rate must never touch disk (architecture §8).
+  const [rate, setRate] = useState("");
 
   useEffect(() => {
     if (!draft.arrivedAt) {
@@ -157,6 +165,12 @@ export function IntakeWizard({
       varianceNote: draft.varianceNote || undefined,
     };
 
+    if (isOwner && rateLock.unlocked && rateLock.key && rate.trim()) {
+      const { ciphertext, iv } = await encryptWithRateKey(rateLock.key, rate.trim());
+      payload.rateCiphertext = ciphertext;
+      payload.rateIv = iv;
+    }
+
     setSubmitting(true);
     const res = await outbox.submit({
       url: "/api/intake/close",
@@ -171,6 +185,7 @@ export function IntakeWizard({
       return;
     }
     clearDraft();
+    setRate("");
     if (res.queued) {
       setResult({ lotCode: "", offline: true });
     } else {
@@ -364,6 +379,20 @@ export function IntakeWizard({
                   className="min-h-20 rounded-md border-[1.5px] border-[#C9CFD4] p-3 text-[17px] outline-none focus:border-[#8B949C]"
                 />
               </Field>
+            )}
+            {isOwner && rateLock.enabled && rateLock.unlocked && (
+              <Field label={t("yourRate")} hint={t("yourRateHint")}>
+                <input
+                  type="number"
+                  inputMode="decimal"
+                  value={rate}
+                  onChange={(e) => setRate(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+            )}
+            {isOwner && rateLock.enabled && !rateLock.unlocked && (
+              <p className="text-sm text-[#4A5057]">{t("yourRateLocked")}</p>
             )}
             {submitError && (
               <p className="text-sm text-[#C03028]" role="alert">

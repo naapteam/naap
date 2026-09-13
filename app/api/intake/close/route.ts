@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, eq, sql } from "drizzle-orm";
 import { db } from "@/lib/db/client";
-import { intake, lot, piece, species } from "@/lib/db/schema";
+import { intake, lot, piece, secureNote, species } from "@/lib/db/schema";
 import { AuthError, requireCan } from "@/lib/auth/guard";
 import { writeAudit } from "@/lib/auth/audit";
 import { closeIntakePayloadSchema } from "@/lib/intake/schema";
@@ -107,6 +107,16 @@ export async function POST(req: Request) {
         createdBy: session.userId,
       })
       .returning();
+
+    if (body.rateCiphertext && body.rateIv) {
+      await tx.insert(secureNote).values({
+        millId,
+        entityTable: "intake",
+        entityId: intakeRow.id,
+        ciphertext: body.rateCiphertext,
+        iv: body.rateIv,
+      });
+    }
 
     const prefix = lotCodePrefix(speciesRow.code, arrivedAt);
     const [{ count }] = await tx

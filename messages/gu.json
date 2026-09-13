@@ -113,7 +113,10 @@
       "closing": "બંધ થઈ રહ્યું છે…",
       "savedOffline": "ઓફલાઇન સેવ થયું — કનેક્શન આવે ત્યારે મોકલાશે.",
       "success": "Intake બંધ થયું — લોટ {lotCode} બન્યો.",
-      "backToList": "Intake પર પાછા જાઓ"
+      "backToList": "Intake પર પાછા જાઓ",
+      "yourRate": "તમારો દર (₹/CFT)",
+      "yourRateHint": "એન્ક્રિપ્ટ કરીને સેવ થાય છે — ફક્ત તમે જ વાંચી શકો છો.",
+      "yourRateLocked": "દર નોંધવા માટે માસ્ટર્સમાં રેટ લોક અનલોક કરો."
     }
   },
   "stock": {
@@ -274,7 +277,10 @@
     "recording": "નોંધાઈ રહ્યું છે…",
     "recorded": "Despatch નોંધાયું.",
     "printChallan": "ચલણ પ્રિન્ટ કરો",
-    "backToList": "Despatch પર પાછા જાઓ"
+    "backToList": "Despatch પર પાછા જાઓ",
+    "yourRate": "તમારો દર (₹/CFT)",
+    "yourRateHint": "એન્ક્રિપ્ટ કરીને સેવ થાય છે — ફક્ત તમે જ વાંચી શકો છો.",
+    "yourRateLocked": "દર નોંધવા માટે માસ્ટર્સમાં રેટ લોક અનલોક કરો."
   },
   "reports": {
     "title": "રિપોર્ટ",
@@ -307,5 +313,95 @@
     "cftSupplied": "પુરું પાડેલ CFT",
     "avgRecovery": "સરેરાશ રિકવરી",
     "supplierMinHint": "અહીં દેખાવા માટે સપ્લાયરની ઓછામાં ઓછી 2 કન્ફર્મ ખેપ જરૂરી છે."
+  },
+  "masters": {
+    "title": "માસ્ટર્સ",
+    "tabs": {
+      "species": "જાત",
+      "grades": "ગ્રેડ",
+      "bays": "બે",
+      "sizePresets": "સાઈઝ પ્રીસેટ",
+      "parties": "પાર્ટીઓ",
+      "users": "યુઝર",
+      "thresholds": "થ્રેશોલ્ડ",
+      "millProfile": "મિલ પ્રોફાઇલ",
+      "dataExport": "ડેટા એક્સપોર્ટ",
+      "rateLock": "રેટ લોક",
+      "compliance": "કમ્પ્લાયન્સ"
+    },
+    "placeholder": {
+      "grades": "ગ્રેડ — જલ્દી આવશે.",
+      "bays": "બે — જલ્દી આવશે.",
+      "sizePresets": "સાઈઝ પ્રીસેટ — જલ્દી આવશે.",
+      "parties": "પાર્ટીઓ — જલ્દી આવશે.",
+      "users": "યુઝર — જલ્દી આવશે.",
+      "thresholds": "થ્રેશોલ્ડ — જલ્દી આવશે.",
+      "millProfile": "મિલ પ્રોફાઇલ — જલ્દી આવશે.",
+      "dataExport": "ડેટા એક્સપોર્ટ — જલ્દી આવશે."
+    },
+    "species": {
+      "title": "જાત",
+      "name": "નામ",
+      "code": "કોડ",
+      "convention": "કન્વેન્શન",
+      "recoveryBand": "રિકવરી બેન્ડ",
+      "byproduct": "Byproduct",
+      "edit": "એડિટ કરો",
+      "editTitle": "{name} એડિટ કરો",
+      "addTitle": "જાત ઉમેરો",
+      "nameEn": "નામ (અંગ્રેજી)",
+      "nameHi": "નામ (હિન્દી)",
+      "nameMr": "નામ (મરાઠી)",
+      "nameGu": "નામ (ગુજરાતી)",
+      "colour": "રંગ",
+      "recoveryLow": "રિકવરી ન્યૂનતમ %",
+      "recoveryHigh": "રિકવરી મહત્તમ %",
+      "minOffcutLength": "ન્યૂનતમ ઓફકટ લંબાઈ (મિમી)",
+      "minOffcutWidth": "ન્યૂનતમ ઓફકટ પહોળાઈ (મિમી)",
+      "saving": "સેવ થઈ રહ્યું છે…",
+      "save": "સેવ કરો",
+      "cancelEdit": "રદ કરો"
+    },
+    "compliance": {
+      "title": "કમ્પ્લાયન્સ દસ્તાવેજો",
+      "label": "દસ્તાવેજ",
+      "number": "નંબર",
+      "expiresOn": "સમાપ્તિ તારીખ",
+      "issuedOn": "જારી તારીખ",
+      "status": "સ્થિતિ",
+      "expired": "સમાપ્ત",
+      "daysLeft": "{days} દિવસ બાકી",
+      "empty": "હજુ સુધી કોઈ કમ્પ્લાયન્સ દસ્તાવેજ નથી.",
+      "addTitle": "દસ્તાવેજ ઉમેરો",
+      "kindLabel": "પ્રકાર",
+      "saving": "સેવ થઈ રહ્યું છે…",
+      "add": "ઉમેરો",
+      "kind": {
+        "sawmill_licence": "સોમિલ લાઇસન્સ",
+        "gst_cert": "GST પ્રમાણપત્ર",
+        "pollution_consent": "પ્રદૂષણ સંમતિ",
+        "factory_licence": "ફેક્ટરી લાઇસન્સ",
+        "other": "અન્ય"
+      }
+    },
+    "rateLock": {
+      "title": "રેટ લોક",
+      "explain1": "Intake અને Despatch પર તમારો પોતાનો દર નોંધવા માટે આ ચાલુ કરો — ફક્ત તમે જાણો છો તે પાસફ્રેઝથી એન્ક્રિપ્ટ થાય છે.",
+      "explain2": "તમારા પાસફ્રેઝ વગર કોઈ પણ, Naap પણ નહીં, આ વાંચી શકે નહીં. જો તમે ભૂલી જાઓ, તો નોંધાયેલા દર પાછા મેળવી શકાશે નહીં.",
+      "passphrase": "પાસફ્રેઝ",
+      "confirmPassphrase": "પાસફ્રેઝ ફરીથી દાખલ કરો",
+      "acknowledge": "હું સમજું છું કે પાસફ્રેઝ ભૂલી જવાય તો પાછો મળશે નહીં.",
+      "tooShort": "પાસફ્રેઝ ઓછામાં ઓછો 8 અક્ષરનો હોવો જોઈએ.",
+      "mismatch": "પાસફ્રેઝ મેળ ખાતા નથી.",
+      "mustAcknowledge": "આગળ વધતા પહેલા સ્વીકારો.",
+      "settingUp": "સેટ થઈ રહ્યું છે…",
+      "turnOn": "રેટ લોક ચાલુ કરો",
+      "enabledLocked": "રેટ લોક ચાલુ છે. આ સેશન માટે અનલોક કરવા પાસફ્રેઝ દાખલ કરો.",
+      "wrongPassphrase": "ખોટો પાસફ્રેઝ.",
+      "unlock": "અનલોક કરો",
+      "unlockedNotice": "આ સેશન માટે અનલોક થયું. Intake અને Despatch પર તમારો દર નોંધાશે.",
+      "disabling": "બંધ થઈ રહ્યું છે…",
+      "turnOff": "રેટ લોક બંધ કરો"
+    }
   }
 }

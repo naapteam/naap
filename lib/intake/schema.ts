@@ -36,6 +36,10 @@ export const closeIntakePayloadSchema = z
     bulk: bulkSchema.optional(),
     bayId: z.string().uuid().nullable(),
     varianceNote: z.string().trim().max(500).optional(),
+    // Owner-only encrypted rate (architecture §8) — ciphertext/IV only,
+    // the server never sees a plaintext rate.
+    rateCiphertext: z.string().optional(),
+    rateIv: z.string().optional(),
   })
   .refine(
     (d) =>

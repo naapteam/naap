@@ -113,7 +113,10 @@
       "closing": "बंद होत आहे…",
       "savedOffline": "ऑफलाइन सेव्ह झाले — कनेक्शन आल्यावर पाठवले जाईल.",
       "success": "Intake बंद झाले — लॉट {lotCode} तयार झाला.",
-      "backToList": "Intake कडे परत जा"
+      "backToList": "Intake कडे परत जा",
+      "yourRate": "तुमचा दर (₹/CFT)",
+      "yourRateHint": "एन्क्रिप्ट करून सेव्ह होतो — फक्त तुम्हीच वाचू शकता.",
+      "yourRateLocked": "दर नोंदवण्यासाठी मास्टर्समध्ये रेट लॉक अनलॉक करा."
     }
   },
   "stock": {
@@ -274,7 +277,10 @@
     "recording": "नोंदवत आहे…",
     "recorded": "Despatch नोंदवले.",
     "printChallan": "चलान प्रिंट करा",
-    "backToList": "Despatch कडे परत जा"
+    "backToList": "Despatch कडे परत जा",
+    "yourRate": "तुमचा दर (₹/CFT)",
+    "yourRateHint": "एन्क्रिप्ट करून सेव्ह होतो — फक्त तुम्हीच वाचू शकता.",
+    "yourRateLocked": "दर नोंदवण्यासाठी मास्टर्समध्ये रेट लॉक अनलॉक करा."
   },
   "reports": {
     "title": "अहवाल",
@@ -307,5 +313,95 @@
     "cftSupplied": "पुरवलेले CFT",
     "avgRecovery": "सरासरी रिकव्हरी",
     "supplierMinHint": "इथे दिसण्यासाठी सप्लायरच्या किमान 2 कन्फर्म खेपा आवश्यक आहेत."
+  },
+  "masters": {
+    "title": "मास्टर्स",
+    "tabs": {
+      "species": "प्रजाती",
+      "grades": "ग्रेड",
+      "bays": "बे",
+      "sizePresets": "साइज़ प्रीसेट",
+      "parties": "पार्ट्या",
+      "users": "युजर",
+      "thresholds": "थ्रेशोल्ड",
+      "millProfile": "मिल प्रोफाइल",
+      "dataExport": "डेटा एक्सपोर्ट",
+      "rateLock": "रेट लॉक",
+      "compliance": "कंप्लायन्स"
+    },
+    "placeholder": {
+      "grades": "ग्रेड — लवकरच येत आहे.",
+      "bays": "बे — लवकरच येत आहे.",
+      "sizePresets": "साइज़ प्रीसेट — लवकरच येत आहे.",
+      "parties": "पार्ट्या — लवकरच येत आहे.",
+      "users": "युजर — लवकरच येत आहे.",
+      "thresholds": "थ्रेशोल्ड — लवकरच येत आहे.",
+      "millProfile": "मिल प्रोफाइल — लवकरच येत आहे.",
+      "dataExport": "डेटा एक्सपोर्ट — लवकरच येत आहे."
+    },
+    "species": {
+      "title": "प्रजाती",
+      "name": "नाव",
+      "code": "कोड",
+      "convention": "कन्व्हेंशन",
+      "recoveryBand": "रिकव्हरी बँड",
+      "byproduct": "Byproduct",
+      "edit": "एडिट करा",
+      "editTitle": "{name} एडिट करा",
+      "addTitle": "प्रजाती जोडा",
+      "nameEn": "नाव (इंग्रजी)",
+      "nameHi": "नाव (हिंदी)",
+      "nameMr": "नाव (मराठी)",
+      "nameGu": "नाव (गुजराती)",
+      "colour": "रंग",
+      "recoveryLow": "रिकव्हरी किमान %",
+      "recoveryHigh": "रिकव्हरी कमाल %",
+      "minOffcutLength": "किमान ऑफकट लांबी (मिमी)",
+      "minOffcutWidth": "किमान ऑफकट रुंदी (मिमी)",
+      "saving": "सेव्ह होत आहे…",
+      "save": "सेव्ह करा",
+      "cancelEdit": "रद्द करा"
+    },
+    "compliance": {
+      "title": "कंप्लायन्स कागदपत्रे",
+      "label": "कागदपत्र",
+      "number": "नंबर",
+      "expiresOn": "समाप्ती तारीख",
+      "issuedOn": "जारी तारीख",
+      "status": "स्थिती",
+      "expired": "समाप्त",
+      "daysLeft": "{days} दिवस बाकी",
+      "empty": "अजून कोणतेही कंप्लायन्स कागदपत्र नाही.",
+      "addTitle": "कागदपत्र जोडा",
+      "kindLabel": "प्रकार",
+      "saving": "सेव्ह होत आहे…",
+      "add": "जोडा",
+      "kind": {
+        "sawmill_licence": "सॉमिल परवाना",
+        "gst_cert": "GST प्रमाणपत्र",
+        "pollution_consent": "प्रदूषण संमती",
+        "factory_licence": "फॅक्टरी परवाना",
+        "other": "इतर"
+      }
+    },
+    "rateLock": {
+      "title": "रेट लॉक",
+      "explain1": "Intake आणि Despatch वर तुमचा स्वतःचा दर नोंदवण्यासाठी हे चालू करा — फक्त तुम्हाला माहीत असलेल्या पासफ्रेजने एन्क्रिप्ट होतो.",
+      "explain2": "तुमच्या पासफ्रेजशिवाय कोणीही, अगदी Naap सुद्धा, हे वाचू शकत नाही. विसरल्यास नोंदवलेले दर परत मिळू शकत नाहीत.",
+      "passphrase": "पासफ्रेज",
+      "confirmPassphrase": "पासफ्रेज पुन्हा टाका",
+      "acknowledge": "पासफ्रेज विसरल्यास परत मिळणार नाही हे मला मान्य आहे.",
+      "tooShort": "पासफ्रेज किमान 8 अक्षरांचा असावा.",
+      "mismatch": "पासफ्रेज जुळत नाहीत.",
+      "mustAcknowledge": "पुढे जाण्यापूर्वी मान्यता द्या.",
+      "settingUp": "सेट होत आहे…",
+      "turnOn": "रेट लॉक चालू करा",
+      "enabledLocked": "रेट लॉक चालू आहे. या सत्रासाठी अनलॉक करण्यासाठी पासफ्रेज टाका.",
+      "wrongPassphrase": "चुकीचा पासफ्रेज.",
+      "unlock": "अनलॉक करा",
+      "unlockedNotice": "या सत्रासाठी अनलॉक झाले. Intake आणि Despatch वर तुमचा दर नोंदवला जाईल.",
+      "disabling": "बंद होत आहे…",
+      "turnOff": "रेट लॉक बंद करा"
+    }
   }
 }

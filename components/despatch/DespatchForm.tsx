@@ -8,6 +8,8 @@ import { formatPieceSize } from "@/lib/stock/format";
 import { SpeciesChip } from "@/components/ui/SpeciesChip";
 import { TotalsBar } from "@/components/ui/TotalsBar";
 import { TypeAhead } from "@/components/ui/TypeAhead";
+import { useRateLock } from "@/components/RateLockProvider";
+import { encryptWithRateKey } from "@/lib/crypto/rateLock";
 
 type StockItem = {
   id: string;
@@ -32,18 +34,25 @@ function toLocalDatetimeInput(d: Date): string {
 export function DespatchForm({
   stock,
   customers,
+  isOwner = false,
 }: {
   stock: StockItem[];
   customers: Customer[];
+  isOwner?: boolean;
 }) {
   const t = useTranslations("despatch");
   const router = useRouter();
+  const rateLock = useRateLock();
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [customerId, setCustomerId] = useState<string | null>(null);
   const [vehicleNo, setVehicleNo] = useState("");
   const [challanNo, setChallanNo] = useState("");
   const [tpNumber, setTpNumber] = useState("");
   const [dispatchedAt, setDispatchedAt] = useState("");
+  // Kept out of persisted state — a plaintext rate must never touch disk
+  // (architecture §8); this form has no draft autosave, but keep the same
+  // discipline as IntakeWizard so a future autosave addition can't leak it.
+  const [rate, setRate] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
@@ -68,6 +77,13 @@ export function DespatchForm({
     setSubmitting(true);
     setError(null);
     try {
+      let rateCiphertext: string | undefined;
+      let rateIv: string | undefined;
+      if (isOwner && rateLock.unlocked && rateLock.key && rate.trim()) {
+        const enc = await encryptWithRateKey(rateLock.key, rate.trim());
+        rateCiphertext = enc.ciphertext;
+        rateIv = enc.iv;
+      }
       const res = await fetch("/api/despatch/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -78,6 +94,8 @@ export function DespatchForm({
           tpNumber: tpNumber || undefined,
           dispatchedAt: dispatchedAt ? new Date(dispatchedAt).toISOString() : new Date().toISOString(),
           pieceIds: [...selected],
+          rateCiphertext,
+          rateIv,
         }),
       });
       const data = await res.json();
@@ -85,6 +103,7 @@ export function DespatchForm({
         setError(data.error ?? "Something went wrong.");
         return;
       }
+      setRate("");
       setResult(data.despatchId);
     } finally {
       setSubmitting(false);
@@ -157,6 +176,20 @@ export function DespatchForm({
             className="h-10 rounded-md border-[1.5px] border-[#C9CFD4] px-3 text-[17px] tabular-nums outline-none focus:border-[#8B949C]"
           />
         </Field>
+        {isOwner && rateLock.enabled && rateLock.unlocked && (
+          <Field label={t("yourRate")} hint={t("yourRateHint")}>
+            <input
+              type="number"
+              inputMode="decimal"
+              value={rate}
+              onChange={(e) => setRate(e.target.value)}
+              className="h-10 rounded-md border-[1.5px] border-[#C9CFD4] px-3 text-[17px] outline-none focus:border-[#8B949C]"
+            />
+          </Field>
+        )}
+        {isOwner && rateLock.enabled && !rateLock.unlocked && (
+          <p className="self-end text-sm text-[#4A5057]">{t("yourRateLocked")}</p>
+        )}
       </div>
 
       <table className="w-full border-collapse text-left">
@@ -230,11 +263,20 @@ export function DespatchForm({
   );
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
   return (
     <label className="flex flex-col gap-1 text-sm text-[#4A5057]">
       {label}
       {children}
+      {hint && <span className="text-xs">{hint}</span>}
     </label>
   );
 }

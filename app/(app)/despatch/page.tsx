@@ -36,5 +36,11 @@ export default async function DespatchPage() {
       ),
   ]);
 
-  return <DespatchForm stock={stockRows} customers={customers} />;
+  return (
+    <DespatchForm
+      stock={stockRows}
+      customers={customers}
+      isOwner={session.role === "owner"}
+    />
+  );
 }

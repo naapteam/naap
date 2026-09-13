@@ -113,7 +113,10 @@
       "closing": "Closing…",
       "savedOffline": "Saved offline — will send when connection returns.",
       "success": "Intake closed — lot {lotCode} created.",
-      "backToList": "Back to Intake"
+      "backToList": "Back to Intake",
+      "yourRate": "Your working rate (₹/CFT)",
+      "yourRateHint": "Stored encrypted — only you can read it.",
+      "yourRateLocked": "Unlock rate lock in Masters to record your rate."
     }
   },
   "stock": {
@@ -274,7 +277,10 @@
     "recording": "Recording…",
     "recorded": "Despatch recorded.",
     "printChallan": "Print challan",
-    "backToList": "Back to Despatch"
+    "backToList": "Back to Despatch",
+    "yourRate": "Your working rate (₹/CFT)",
+    "yourRateHint": "Stored encrypted — only you can read it.",
+    "yourRateLocked": "Unlock rate lock in Masters to record your rate."
   },
   "reports": {
     "title": "Reports",
@@ -307,5 +313,95 @@
     "cftSupplied": "CFT supplied",
     "avgRecovery": "Avg recovery",
     "supplierMinHint": "A supplier needs at least 2 confirmed consignments to appear here."
+  },
+  "masters": {
+    "title": "Masters",
+    "tabs": {
+      "species": "Species",
+      "grades": "Grades",
+      "bays": "Bays",
+      "sizePresets": "Size presets",
+      "parties": "Parties",
+      "users": "Users",
+      "thresholds": "Thresholds",
+      "millProfile": "Mill profile",
+      "dataExport": "Data export",
+      "rateLock": "Rate lock",
+      "compliance": "Compliance"
+    },
+    "placeholder": {
+      "grades": "Grades — coming soon.",
+      "bays": "Bays — coming soon.",
+      "sizePresets": "Size presets — coming soon.",
+      "parties": "Parties — coming soon.",
+      "users": "Users — coming soon.",
+      "thresholds": "Thresholds — coming soon.",
+      "millProfile": "Mill profile — coming soon.",
+      "dataExport": "Data export — coming soon."
+    },
+    "species": {
+      "title": "Species",
+      "name": "Name",
+      "code": "Code",
+      "convention": "Convention",
+      "recoveryBand": "Recovery band",
+      "byproduct": "Byproduct",
+      "edit": "Edit",
+      "editTitle": "Edit {name}",
+      "addTitle": "Add species",
+      "nameEn": "Name (English)",
+      "nameHi": "Name (Hindi)",
+      "nameMr": "Name (Marathi)",
+      "nameGu": "Name (Gujarati)",
+      "colour": "Colour",
+      "recoveryLow": "Recovery low %",
+      "recoveryHigh": "Recovery high %",
+      "minOffcutLength": "Min offcut length (mm)",
+      "minOffcutWidth": "Min offcut width (mm)",
+      "saving": "Saving…",
+      "save": "Save",
+      "cancelEdit": "Cancel"
+    },
+    "compliance": {
+      "title": "Compliance documents",
+      "label": "Document",
+      "number": "Number",
+      "expiresOn": "Expires on",
+      "issuedOn": "Issued on",
+      "status": "Status",
+      "expired": "Expired",
+      "daysLeft": "{days} days left",
+      "empty": "No compliance documents yet.",
+      "addTitle": "Add document",
+      "kindLabel": "Kind",
+      "saving": "Saving…",
+      "add": "Add",
+      "kind": {
+        "sawmill_licence": "Sawmill licence",
+        "gst_cert": "GST certificate",
+        "pollution_consent": "Pollution consent",
+        "factory_licence": "Factory licence",
+        "other": "Other"
+      }
+    },
+    "rateLock": {
+      "title": "Rate lock",
+      "explain1": "Turn this on to record your own working rate on intake and despatch — encrypted with a passphrase only you know.",
+      "explain2": "Nobody else, not even Naap, can read it without your passphrase. If you forget it, the recorded rates cannot be recovered.",
+      "passphrase": "Passphrase",
+      "confirmPassphrase": "Confirm passphrase",
+      "acknowledge": "I understand this passphrase cannot be recovered if lost.",
+      "tooShort": "Passphrase must be at least 8 characters.",
+      "mismatch": "Passphrases don't match.",
+      "mustAcknowledge": "Please acknowledge before continuing.",
+      "settingUp": "Setting up…",
+      "turnOn": "Turn on rate lock",
+      "enabledLocked": "Rate lock is on. Enter your passphrase to unlock it for this session.",
+      "wrongPassphrase": "Wrong passphrase.",
+      "unlock": "Unlock",
+      "unlockedNotice": "Unlocked for this session. Your working rate will be recorded on intake and despatch.",
+      "disabling": "Turning off…",
+      "turnOff": "Turn off rate lock"
+    }
   }
 }
